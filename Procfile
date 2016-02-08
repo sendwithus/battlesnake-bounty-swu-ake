@@ -1,2 +1,2 @@
-bs-web: gunicorn wsgi_web --log-file -
-bs-worker: gunicorn wsgi_worker --log-file -
+web: gunicorn wsgi_web
+worker: gunicorn wsgi_worker
