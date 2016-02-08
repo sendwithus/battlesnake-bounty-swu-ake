@@ -26,7 +26,8 @@ class RedisBoard(ComputeBoard):
 			'territory_control': self.territory_control(),
 			'food_details': self.food_details(),
 			'closest_food_directions': self.closest_food_directions(),
-			'children_payloads': self.children_payloads()
+			'children_payloads': self.children_payloads(),
+			'board_quality': self.board_quality(),
 		}
 		self.redis_server.set(self.payload, json.dumps(data))
 

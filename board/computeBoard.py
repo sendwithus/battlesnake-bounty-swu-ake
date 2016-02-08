@@ -43,10 +43,31 @@ class ComputeBoard(BaseBoard):
 			else:
 				self.other_snake_names.append(snake.get("name", ""))
 
+
+	def board_quality(self):
+		if hasattr(self, "_board_quality"):
+			return self._board_quality
+
+		# board control
+		ctrl = self.territory_control()
+		avg_control = sum(ctrl.values())/len(ctrl.keys())
+		my_control = ctrl[self._me.get("name")]
+		board_control = my_control/avg_control
+
+		# approaching food
+		hunger = (100 - self._me.get("health"))
+		distance = self.distance_to_closest_food()
+		approach_food = hunder*distance/10
+
+		self._board_quality = board_control + approach_food
+		return self._board_quality
+
 	def territory_control(self):
+		if hasattr(self, "_territory_control"):
+			return self._territory_control
+
 		territory_edges = [tuple(snake.get('coords')[0]) for snake in self.all_snakes]
 		territory_control = {}
-		print list(self.adjacent_cells((19, 19)))
 		while len(territory_edges) > 0:
 			
 			# pop
@@ -58,20 +79,22 @@ class ComputeBoard(BaseBoard):
 			for coord in self.adjacent_cells(t_edge):
 				coord = tuple(coord)
 				if not self.get(coord, "controlled_by"):
-					# print coord
 					self.set(coord, "controlled_by", controlled_by)
 					territory_edges.append(coord)
 					if controlled_by not in territory_control.keys():
 						territory_control[controlled_by] = 0
 					territory_control[controlled_by] += 1
 
-		print territory_control
+		self._territory_control = territory_control
 		return territory_control
 
 	def food_details(self):
 		'''
 		return list of tuples: [(distance, controlled_by, coordinate), ]
 		'''
+		if hasattr(self, "_food_details"):
+			return self._food_details
+
 		food_details = []
 		for coord in self.food:
 			(x, y) = coord
@@ -79,9 +102,18 @@ class ComputeBoard(BaseBoard):
 			distance = abs(x - hx) + abs(y - hy)
 			controlled_by = self.get((x, y), 'controlled_by')
 			food_details.append((distance, controlled_by, (x,y)))
+
+		self._food_details = food_details
 		return food_details
 
+	def distance_to_closest_food(self):
+		distances = [dist for (dist, ctrl, coord) in self.food_details() if ctrl == self._me.get("name")]
+		return min(distances)
+
 	def closest_food_directions(self):
+		if hasattr(self, "_closest_food_directions"):
+			return self._closest_food_directions
+
 		closest_dist = None
 		closest_coord = None
 		for (distance, controlled_by, (x, y)) in self.food_details():
@@ -102,6 +134,8 @@ class ComputeBoard(BaseBoard):
 			closest_food_directions.append("west")
 		if delta_y < 0:
 			closest_food_directions.append("east")
+
+		self._closest_food_directions = closest_food_directions
 		return closest_food_directions
 
 	def children(self):
