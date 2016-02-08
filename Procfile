@@ -1,2 +1,2 @@
-web: gunicorn wsgi_web
-worker: gunicorn wsgi_worker
+web: bin/web.sh
+worker: bin/worker.sh
