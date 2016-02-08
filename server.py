@@ -3,8 +3,8 @@ from flask import Flask, render_template, jsonify, request
 import redis
 import json
 
-from board import Board
 import settings
+
 
 application = Flask(__name__, static_url_path='/static')
 redis_server = redis.Redis('localhost')
@@ -18,16 +18,12 @@ def home():
 @application.route('/start', methods=['POST'])
 def start():
 	data = json.loads(request.data)
-	board = Board(data)
+	game = data.get("game")
 
-	current_board_key = "%s_current_board" % board.game_name
-	best_move_key = "%s_best_move" % board.game_name
-	to_visit_key = "%s_to_visit" % board.game_name
-
-	redis_server.sadd("active_games", board.game_name)
-	redis_server.set(current_board_key, board.redis_key)
-	redis_server.delete(to_visit_key)
-	redis_server.sadd(to_visit_key, board.redis_key)
+	redis_server.sadd("active_games", game)
+	redis_server.set("%s_current_board" % game, data)
+	redis_server.delete("%s_to_visit" % game)
+	redis_server.sadd("%s_to_visit" % game, request.data)
 
 	return jsonify({
 		'taunt': "red october standing by",
@@ -45,22 +41,18 @@ def end():
 @application.route('/move', methods=['POST'])
 def move():
 	data = json.loads(request.data)
-	game_name = data.get("game")
-	board = Board(data)
-
-	current_board_key = "%s_current_board" % game_name
-	best_move_key = "%s_best_move" % game_name
-	to_visit_key = "%s_to_visit" % game_name
+	key = redis_key(data)
+	game = data.get("game")
 
 	# traverse from here
-	redis_server.set(current_board_key, board.redis_key)
-	redis_server.delete(to_visit_key)
-	redis_server.sadd(to_visit_key, board.redis_key)
+	redis_server.set("%s_current_board" % game, key)
+	redis_server.delete("%s_to_visit" % game)
+	redis_server.sadd("%s_to_visit" % game, json.dumps(request.data))
 
-	time.sleep(0.9) # TODO: wait till 0.99 after this request came in
+	time.sleep(0.5) # TODO: wait till 0.99 after this request came in
 
 	return jsonify({
-		"move": redis_server.get(best_move_key),
+		"move": redis_server.get("%s_best_move" % game),
 		"taunt": ""
 	})
 

@@ -24,13 +24,13 @@ def visit(game, data):
 			redis_server.sadd("%s_to_visit" % game, child_payload)
 			print child_payload
 
-clear_redis()
-test()
 
-while True:
-	for game in redis_server.smembers("active_games"):
-		board_key = redis_server.spop("%s_to_visit" % game)
-		if game and board_key:
-			visit(game, board_key)
-		time.sleep(1)
-
+def application(environ, start_response):
+	clear_redis()
+	test()
+	while True:
+		for game in redis_server.smembers("active_games"):
+			board_key = redis_server.spop("%s_to_visit" % game)
+			if game and board_key:
+				visit(game, board_key)
+			time.sleep(1)
