@@ -8,7 +8,7 @@ from board.computeBoard import ComputeBoard
 class RedisBoard(ComputeBoard):
 
 	def __init__(self, payload=None):
-		self.redis_server = redis.Redis('localhost')
+		self.redis_server = redis.Redis(settings.REDIS_URL)
 
 		# load from redis
 		if self.redis_server.exists(payload):

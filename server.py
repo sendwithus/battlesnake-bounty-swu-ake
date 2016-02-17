@@ -8,7 +8,7 @@ import settings
 
 
 application = Flask(__name__, static_url_path='/static')
-redis_server = redis.Redis('localhost')
+redis_server = redis.Redis(settings.REDIS_URL)
 
 
 @application.route('/')
