@@ -4,9 +4,9 @@ def redis_connection():
 	try:
 		(scheme, url, port) = settings.REDIS_URL.split(":")
 		redis_server = redis.Redis(url, port)
+		return redis_server
 	except Exception as e:
 		print e
-	return redis_server
 
 
 def redis_key(payload):
