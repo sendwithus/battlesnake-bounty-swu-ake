@@ -28,7 +28,7 @@ def start():
 		redis_server.delete("%s_to_visit" % game)
 		redis_server.sadd("%s_to_visit" % game, request.data)
 	except Exception as e:
-		print e
+		print e 
 
 	return jsonify({
 		"taunt": "red october standing by",
@@ -38,9 +38,11 @@ def start():
 @application.route('/end', methods=['POST'])
 def end():
 	data = json.loads(request.data)
-	redis_server.srem("active_games", data.get("game"))
-	# TODO: remove all redis keys to do with this game
-	return jsonify(ME)
+	try:
+		redis_server.srem("active_games", data.get("game"))
+	except Exception as e:
+		print e 
+	return jsonify(settings.ME)
 
 
 @application.route('/move', methods=['POST'])
@@ -49,15 +51,18 @@ def move():
 	key = redis_key(data)
 	game = data.get("game")
 
-	# traverse from here
-	redis_server.set("%s_current_board" % game, key)
-	redis_server.delete("%s_to_visit" % game)
-	redis_server.sadd("%s_to_visit" % game, json.dumps(request.data))
+	try:
+		# traverse from here
+		redis_server.set("%s_current_board" % game, key)
+		redis_server.delete("%s_to_visit" % game)
+		redis_server.sadd("%s_to_visit" % game, json.dumps(request.data))
+	except Exception as e:
+		print e 
 
 	time.sleep(0.5) # TODO: wait till 0.99 after this request came in
 
 	return jsonify({
-		"move": redis_server.get("%s_best_move" % game),
+		"move": redis_server.get("%s_best_move" % game, "north"),
 		"taunt": ""
 	})
 
