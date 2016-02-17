@@ -2,4 +2,4 @@ flask
 requests
 gunicorn
 redis
-urllib
+urllib3
