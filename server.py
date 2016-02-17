@@ -1,11 +1,10 @@
 #!/usr/bin/python
 from flask import Flask, render_template, jsonify, request
-import redis
 import json
 import pprint
 
 import settings
-from utils import redis_server
+from utils import redis_server, redis_key
 
 
 application = Flask(__name__, static_url_path='/static')
