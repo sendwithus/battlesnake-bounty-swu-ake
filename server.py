@@ -17,7 +17,9 @@ def home():
 
 @application.route('/start', methods=['POST'])
 def start():
-	data = json.loads(request.data)
+	data = request.get_json(force=True)
+	import pprint
+	pprint.pprint(data)
 	game = data.get("game")
 
 	redis_server.sadd("active_games", game)
@@ -55,7 +57,6 @@ def move():
 		"move": redis_server.get("%s_best_move" % game),
 		"taunt": ""
 	})
-
 
 if __name__ == '__main__':
 	application.debug = True
