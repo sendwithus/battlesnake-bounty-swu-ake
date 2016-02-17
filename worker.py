@@ -7,7 +7,7 @@ from board.redisBoard import RedisBoard
 import settings
 from test import test
 
-redis_server = redis.Redis('localhost')
+redis_server = redis.Redis(settings.REDIS_URL)
 
 
 def clear_redis():

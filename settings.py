@@ -34,3 +34,6 @@ ME = {
     "color": "#00A800",  # guybrush green
     "head": "http://www.clker.com/cliparts/D/i/A/w/J/R/snake-no-white-drule-hi.png",
 }
+
+import os
+REDIS_URL = os.environ.get("REDIS_URL", 'localhost')
