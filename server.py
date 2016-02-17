@@ -47,11 +47,12 @@ def end():
 
 @application.route('/move', methods=['POST'])
 def move():
-	data = json.loads(request.data)
-	key = redis_key(data)
-	game = data.get("game")
+	game = "unknown"
 
 	try:
+		data = json.loads(request.data)
+		key = redis_key(data)
+		game = data.get("game")
 		# traverse from here
 		redis_server.set("%s_current_board" % game, key)
 		redis_server.delete("%s_to_visit" % game)
@@ -61,8 +62,14 @@ def move():
 
 	time.sleep(0.5) # TODO: wait till 0.99 after this request came in
 
+	move = "north"
+	try:
+		redis_server.get("%s_best_move" % game)
+	except Exception as e:
+		print e
+
 	return jsonify({
-		"move": redis_server.get("%s_best_move" % game, "north"),
+		"move": move,
 		"taunt": ""
 	})
 
