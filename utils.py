@@ -1,10 +1,17 @@
 import settings
 
-def redis_connection():
-	url = "redis://h:p3e5ialsr72o65caic95m4icq3b@ec2-54-235-152-160.compute-1.amazonaws.com"
+_redis_server = None
+
+
+def redis_server():
+	global _redis_server
+	if _redis_server:
+		return _redis_server
+
+	url = "h:p3e5ialsr72o65caic95m4icq3b@ec2-54-235-152-160.compute-1.amazonaws.com"
 	port = 23619
-	redis_server = redis.Redis(url, port)
-	return redis_server
+	_redis_server = redis.Redis(url, port)
+	return _redis_server
 
 def redis_key(payload):
 	# consistent order snakes

@@ -5,12 +5,10 @@ import json
 import pprint
 
 import settings
-from utils import redis_connection
+from utils import redis_server()
 
 
 application = Flask(__name__, static_url_path='/static')
-
-redis_server = redis_connection()
 
 @application.route('/')
 def home():
@@ -24,10 +22,10 @@ def start():
 	game = data.get("game")
 
 	try:
-		redis_server.sadd("active_games", game)
-		redis_server.set("%s_current_board" % game, data)
-		redis_server.delete("%s_to_visit" % game)
-		redis_server.sadd("%s_to_visit" % game, request.data)
+		redis_server().sadd("active_games", game)
+		redis_server().set("%s_current_board" % game, data)
+		redis_server().delete("%s_to_visit" % game)
+		redis_server().sadd("%s_to_visit" % game, request.data)
 	except Exception as e:
 		print e 
 
@@ -40,7 +38,7 @@ def start():
 def end():
 	data = json.loads(request.data)
 	try:
-		redis_server.srem("active_games", data.get("game"))
+		redis_server().srem("active_games", data.get("game"))
 	except Exception as e:
 		print e 
 	return jsonify(settings.ME)
@@ -55,9 +53,9 @@ def move():
 		key = redis_key(data)
 		game = data.get("game")
 		# traverse from here
-		redis_server.set("%s_current_board" % game, key)
-		redis_server.delete("%s_to_visit" % game)
-		redis_server.sadd("%s_to_visit" % game, json.dumps(request.data))
+		redis_server().set("%s_current_board" % game, key)
+		redis_server().delete("%s_to_visit" % game)
+		redis_server().sadd("%s_to_visit" % game, json.dumps(request.data))
 	except Exception as e:
 		print e 
 
@@ -65,7 +63,7 @@ def move():
 
 	move = "north"
 	try:
-		redis_server.get("%s_best_move" % game)
+		redis_server().get("%s_best_move" % game)
 	except Exception as e:
 		print e
 
