@@ -10,9 +10,7 @@ def redis_server():
 	if _redis_server:
 		return _redis_server
 
-	url = "h:p3e5ialsr72o65caic95m4icq3b@ec2-54-235-152-160.compute-1.amazonaws.com"
-	port = 23619
-	_redis_server = redis.Redis(host=url, port=port)
+	_redis_server = redis.from_url(settings.REDIS_URL)
 	return _redis_server
 
 def redis_key(payload):
