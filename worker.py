@@ -6,8 +6,9 @@ import json
 from board.redisBoard import RedisBoard
 import settings
 from test import test
+from utils import redis_connection
 
-redis_server = redis.Redis(settings.REDIS_URL)
+redis_server = redis_connection()
 
 
 def clear_redis():

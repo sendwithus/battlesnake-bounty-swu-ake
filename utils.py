@@ -1,3 +1,13 @@
+import settings
+from urllib.parse import urlparse
+
+def redis_connection():
+	o = urlparse(settings.REDIS_URL)
+	url = o.hostname + o.path
+	port = o.port
+	redis_server = redis.Redis(url, port)
+	return redis_server
+
 
 def redis_key(payload):
 	# consistent order snakes

@@ -5,11 +5,12 @@ import json
 import pprint
 
 import settings
+from utils import redis_connection
 
 
 application = Flask(__name__, static_url_path='/static')
-redis_server = redis.Redis(settings.REDIS_URL)
 
+redis_server = redis_connection()
 
 @application.route('/')
 def home():
