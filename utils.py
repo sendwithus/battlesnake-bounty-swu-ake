@@ -1,13 +1,10 @@
 import settings
 
 def redis_connection():
-	try:
-		(scheme, url, port) = settings.REDIS_URL.split(":")
-		redis_server = redis.Redis(url, port)
-		return redis_server
-	except Exception as e:
-		print e
-
+	url = "redis://h:p3e5ialsr72o65caic95m4icq3b@ec2-54-235-152-160.compute-1.amazonaws.com"
+	port = 23619
+	redis_server = redis.Redis(url, port)
+	return redis_server
 
 def redis_key(payload):
 	# consistent order snakes
