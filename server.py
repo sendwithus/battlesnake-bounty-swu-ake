@@ -2,6 +2,7 @@
 from flask import Flask, render_template, jsonify, request
 import redis
 import json
+import pprint
 
 import settings
 
@@ -18,17 +19,19 @@ def home():
 @application.route('/start', methods=['POST'])
 def start():
 	data = request.get_json(force=True)
-	import pprint
 	pprint.pprint(data)
 	game = data.get("game")
 
-	redis_server.sadd("active_games", game)
-	redis_server.set("%s_current_board" % game, data)
-	redis_server.delete("%s_to_visit" % game)
-	redis_server.sadd("%s_to_visit" % game, request.data)
+	try:
+		redis_server.sadd("active_games", game)
+		redis_server.set("%s_current_board" % game, data)
+		redis_server.delete("%s_to_visit" % game)
+		redis_server.sadd("%s_to_visit" % game, request.data)
+	except Exception as e:
+		print e
 
 	return jsonify({
-		'taunt': "red october standing by",
+		"taunt": "red october standing by",
 	})
 
 
