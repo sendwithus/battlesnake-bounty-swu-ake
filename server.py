@@ -1,4 +1,4 @@
-c#!/usr/bin/python
+#!/usr/bin/python
 from flask import Flask, render_template, jsonify, request
 import redis
 import json
