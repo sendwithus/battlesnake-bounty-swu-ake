@@ -5,7 +5,7 @@ import json
 import pprint
 
 import settings
-from utils import redis_server()
+from utils import redis_server
 
 
 application = Flask(__name__, static_url_path='/static')

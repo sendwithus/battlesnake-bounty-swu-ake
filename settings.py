@@ -28,7 +28,7 @@ ARROWS = {
 }
 
 
-SNAKE_NAME = "bounty-swu-ake"
+SNAKE_NAME = "Adder Lovelace...ssssss"
 ME = {
     'name': SNAKE_NAME,
     "color": "#00A800",  # guybrush green
