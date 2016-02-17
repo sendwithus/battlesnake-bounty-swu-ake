@@ -1,4 +1,4 @@
-#!/usr/bin/python
+c#!/usr/bin/python
 from flask import Flask, render_template, jsonify, request
 import redis
 import json
@@ -12,7 +12,7 @@ redis_server = redis.Redis('localhost')
 
 @application.route('/')
 def home():
-	return jsonify(ME)
+	return jsonify(settings.ME)
 
 
 @application.route('/start', methods=['POST'])
