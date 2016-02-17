@@ -1,11 +1,11 @@
 import settings
-from urllib.parse import urlparse
 
 def redis_connection():
-	o = urlparse(settings.REDIS_URL)
-	url = o.hostname + o.path
-	port = o.port
-	redis_server = redis.Redis(url, port)
+	try:
+		(scheme, url, port) = settings.REDIS_URL.split(":")
+		redis_server = redis.Redis(url, port)
+	except Exception as e:
+		print e
 	return redis_server
 
 
