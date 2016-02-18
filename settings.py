@@ -32,7 +32,7 @@ SNAKE_NAME = "Adder Lovelace...ssssss"
 ME = {
     'name': SNAKE_NAME,
     "color": "#00A800",  # guybrush green
-    "head": "http://adewes.github.io/gitboard/",
+    "head": "http://svgporn.com/logos/gitboard.svg",
 }
 
 import os
