@@ -195,6 +195,7 @@ class ComputeBoard(BaseBoard):
 		for (name, (x, y)) in move_set:
 
 			# keep track of our move
+			print "%s ?= %s" % (name, settings.SNAKE_NAME)
 			if name == settings.SNAKE_NAME:
 				based_on_move = (x, y)
 
