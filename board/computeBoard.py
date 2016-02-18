@@ -193,7 +193,7 @@ class ComputeBoard(BaseBoard):
 		try:
 			# update each snake
 			for (name, (x, y)) in move_set:
-
+				print " %s: %s,%s" % (name, x, y)
 				# keep track of our move
 				if name == "Sendwithus":  # TODO: FIX MASSIVE HACK
 					based_on_move = (x, y)
@@ -212,7 +212,7 @@ class ComputeBoard(BaseBoard):
 				del snake['coords'][-1]
 				snake['coords'].insert(0, (x, y))
 				new_payload.get("snakes", [])[snake_i] = snake
-		except Excption as e:
+		except Exception as e:
 			print e
 
 		return based_on_move, new_payload
