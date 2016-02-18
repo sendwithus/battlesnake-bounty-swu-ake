@@ -16,7 +16,7 @@ def redis_server():
 	# print "%s, %s" % (url, port)
 	# _redis_server = redis.from_url(url, port)
 
-	_redis_server = edis.from_url(os.environ.get("REDIS_URL"))
+	_redis_server = redis.from_url(os.environ.get("REDIS_URL"))
 	return _redis_server
 
 def redis_key(payload):
