@@ -14,30 +14,33 @@ def home():
 	return jsonify(settings.ME)
 
 
+def set_head_board():
+	print "setting head board"
+	data = request.get_json(force=True)
+	game = data.get("game")
+	board = RedisBoard(data)
+
+	print "clearing"
+	redis_server().sadd("active_games", game)
+	redis_server().delete("%s_N" % game)
+	redis_server().delete("%s_S" % game)
+	redis_server().delete("%s_E" % game)
+	redis_server().delete("%s_W" % game)
+
+	print "populating"
+	for next_pos in board.children_dict():
+		curr_pos = board.head()
+		direction = DIRECTION_STRINGS[subtract_vectors(next_pos, curr_pos)]
+		for next_board in board.children_dict()[direction]:
+			board_direction_key = "%s_%s" % (game, direction)
+			print board_direction_key 
+			redis_server().sadd(board_direction_key, next_board)
+	print "done setting head board"
+
+
 @application.route('/start', methods=['POST'])
 def start():
-	try:
-		data = request.get_json(force=True)
-		game = data.get("game")
-		board = RedisBoard(data)
-
-		redis_server().sadd("active_games", game)
-		redis_server().delete("%s_N" % game)
-		redis_server().delete("%s_S" % game)
-		redis_server().delete("%s_E" % game)
-		redis_server().delete("%s_W" % game)
-
-		for next_pos in board.children_dict():
-			curr_pos = board.head()
-			direction = DIRECTION_STRINGS[subtract_vectors(next_pos, curr_pos)]
-			for next_board in board.children_dict()[direction]:
-				board_direction_key = "%s_%s" % (game, direction)
-				print board_direction_key 
-				redis_server().sadd(board_direction_key, next_board)
-
-	except Exception as e:
-		print e 
-
+	set_head_board()
 	return jsonify({
 		"taunt": "red october standing by",
 	})
@@ -55,23 +58,9 @@ def end():
 
 @application.route('/move', methods=['POST'])
 def move():
-	game = "unknown"
-	move = "north"
-
-	try:
-		data = json.loads(request.data)
-		key = redis_key(data)
-		game = data.get("game")
-		# traverse from here
-		redis_server().set("%s_current_board" % game, key)
-		redis_server().delete("%s_to_visit" % game)
-		redis_server().sadd("%s_to_visit" % game, json.dumps(request.data))
-
-		time.sleep(0.5) # TODO: wait till 0.99 after this request came in
-
-		redis_server().get("%s_best_move" % game)
-	except Exception as e:
-		print e
+	set_head_board()
+	time.sleep(0.5) # TODO: wait till 0.99 after this request came in
+	move = redis_server().get("%s_best_move" % game)
 
 	return jsonify({
 		"move": move,
