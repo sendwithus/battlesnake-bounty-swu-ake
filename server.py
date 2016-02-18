@@ -18,7 +18,6 @@ def home():
 def start():
 	try:
 		data = request.get_json(force=True)
-		pprint.pprint(data)
 		game = data.get("game")
 		board = RedisBoard(data)
 
@@ -27,11 +26,14 @@ def start():
 		redis_server().delete("%s_S" % game)
 		redis_server().delete("%s_E" % game)
 		redis_server().delete("%s_W" % game)
+		
 		for next_pos in board.children_dict():
 			curr_pos = board.head()
 			direction = DIRECTION_STRINGS[subtract_vectors(next_pos, curr_pos)]
 			for next_board in board.children_dict()[direction]:
-				redis_server().sadd("%s_%s" % (game, direction), next_board)
+				board_direction_key = "%s_%s" % (game, direction)
+				print board_direction_key 
+				redis_server().sadd(board_direction_key, next_board)
 
 	except Exception as e:
 		print e 
