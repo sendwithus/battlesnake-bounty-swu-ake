@@ -2,7 +2,7 @@
 #? push your code to both github, and heroku
 
 git add .
-git commit -m "@"
+git commit -m '$@'
 git push origin master
 git push production master
 heroku logs -t

@@ -10,7 +10,10 @@ def redis_server():
 	if _redis_server:
 		return _redis_server
 
-	_redis_server = redis.from_url(settings.REDIS_URL)
+	url, port = settings.REDIS_URL.rsplit(':', 1)
+	port = int(port)
+	print "%s, %s" % (url, port)
+	_redis_server = redis.from_url(url, port)
 	return _redis_server
 
 def redis_key(payload):
