@@ -190,25 +190,29 @@ class ComputeBoard(BaseBoard):
 		new_payload['turn'] += 1
 		based_on_move = None
 
-		# update each snake
-		for (name, (x, y)) in move_set:
+		try:
+			# update each snake
+			for (name, (x, y)) in move_set:
 
-			# keep track of our move
-			if name == "Sendwithus":  # TODO: FIX MASSIVE HACK
-				based_on_move = (x, y)
+				# keep track of our move
+				if name == "Sendwithus":  # TODO: FIX MASSIVE HACK
+					based_on_move = (x, y)
 
-			# find snake
-			snake = None
-			snake_i = 0
-			for snake in new_payload.get("snakes", []):
-				if snake.get("name") == name:
-					break
-				snake_i += 1
+				# find snake
+				snake = None
+				snake_i = 0
+				for snake in new_payload.get("snakes", []):
+					if snake.get("name") == name:
+						break
+					snake_i += 1
 
-			# update snake
-			snake['age'] += 1
-			snake['health'] -= 1
-			del snake['coords'][-1]
-			snake['coords'].insert(0, (x, y))
-			new_payload.get("snakes", [])[snake_i] = snake
+				# update snake
+				snake['age'] += 1
+				snake['health'] -= 1
+				del snake['coords'][-1]
+				snake['coords'].insert(0, (x, y))
+				new_payload.get("snakes", [])[snake_i] = snake
+		except Excption as e:
+			print e
+
 		return based_on_move, new_payload
