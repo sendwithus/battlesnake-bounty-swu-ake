@@ -44,7 +44,7 @@ def set_head_board():
 def start():
 	set_head_board()
 	return jsonify({
-		"taunt": "red october standing by",
+		"taunt": 'red october standing by" onload="alert(\'howdy\');',
 	})
 
 
