@@ -17,6 +17,8 @@ def home():
 def set_head_board():
 	print "setting head board"
 	data = request.get_json(force=True)
+	import pprint
+	pprint.pprint(data)
 	game = data.get("game")
 	board = RedisBoard(data)
 

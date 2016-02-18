@@ -11,7 +11,7 @@ def redis_server():
 	if _redis_server:
 		return _redis_server
 
-	_redis_server = redis.from_url(os.environ.get("REDIS_URL"))
+	_redis_server = redis.from_url(os.environ.get("REDIS_URL", 'redis://localhost:6379'))
 	return _redis_server
 
 def redis_key(payload):

@@ -2,6 +2,7 @@ import itertools
 import copy
 
 import settings
+from utils import subtract_vectors
 from board.baseBoard import BaseBoard
 
 
@@ -156,6 +157,8 @@ class ComputeBoard(BaseBoard):
 			choices = self.snake_choices(name)
 			move_options.append([(name, (x, y)) for (x, y) in choices])
 		possible_move_combinations = list(itertools.product(*move_options))
+		import pprint
+		pprint.pprint(self.payload)
 		print "possible combos: %s" % possible_move_combinations
 
 		# generate all children
@@ -165,7 +168,7 @@ class ComputeBoard(BaseBoard):
 			based_on_move, new_payload = self._child_payload(move_set)
 			print "based on: %s" % based_on_move
 			print "payload: %s" % new_payload
-			direction = DIRECTION_STRINGS[subtract_vectors(next_pos, self.head())]
+			direction = settings.DIRECTION_STRINGS[subtract_vectors(based_on_move, self.head())]
 			print direction
 			children[direction].append(new_payload)
 		return children
@@ -189,7 +192,7 @@ class ComputeBoard(BaseBoard):
 		new_payload = copy.deepcopy(self.payload)
 		new_payload['turn'] += 1
 		based_on_move = None
-		print dict(self)
+		print dir(self)
 		try:
 			# update each snake
 			for (name, (x, y)) in move_set:

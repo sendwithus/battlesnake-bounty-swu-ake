@@ -11,16 +11,16 @@ class RedisBoard(ComputeBoard):
 	def __init__(self, payload=None):
 		self.redis_server = redis_server()
 
-		# load from redis
-		if self.redis_server.exists(payload):
-			print "loading from redis"
-			data = self.redis_server.get(payload)
-			data = json.loads(data)
-			self._territory_control = data['territory_control']
-			self._food_details = data['food_details']
-			self._closest_food_directions = data['closest_food_directions']
-			self._children_payloads = data['children_payloads']
-			return
+		# # load from redis
+		# if self.redis_server.exists(payload):
+		# 	print "loading from redis"
+		# 	data = self.redis_server.get(payload)
+		# 	data = json.loads(data)
+		# 	self._territory_control = data.get('territory_control')
+		# 	self._food_details = data.get('food_details')
+		# 	self._closest_food_directions = data.get('closest_food_directions')
+		# 	self._children_payloads = data.get('children_payloads')
+		# 	return
 
 		# cache to redis
 		print "building A"
