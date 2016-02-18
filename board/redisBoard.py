@@ -25,25 +25,26 @@ class RedisBoard(ComputeBoard):
 		# cache to redis
 		print "building A"
 		super(RedisBoard, self).__init__(payload)
-		print "building B"
-		self.territory_control()
-		print "building C"
-		self.food_details()
-		print "building D"
-		self.closest_food_directions()
-		print "building E"
-		self.children_payloads()
-		print "building F"
-		self.board_quality()
-		print "building G"
+		# print "building B"
+		# self.territory_control()
+		# print "building C"
+		# self.food_details()
+		# print "building D"
+		# self.closest_food_directions()
+		# print "building E"
+		# self.children_payloads()
+		# print "building F"
+		# self.board_quality()
+		# print "building G"
 
-		data = {
-			'territory_control': self.territory_control(),
-			'food_details': self.food_details(),
-			'closest_food_directions': self.closest_food_directions(),
-			'children_payloads': self.children_payloads(),
-			'board_quality': self.board_quality(),
-		}
+		# data = {
+		# 	'territory_control': self.territory_control(),
+		# 	'food_details': self.food_details(),
+		# 	'closest_food_directions': self.closest_food_directions(),
+		# 	'children_payloads': self.children_payloads(),
+		# 	'board_quality': self.board_quality(),
+		# }
+		data = {}
 		self.redis_server.set(self.payload, json.dumps(data))
 		print "building D"
 
