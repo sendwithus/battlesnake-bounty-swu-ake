@@ -27,7 +27,9 @@ def set_head_board():
 	redis_server().delete("%s_W" % game)
 
 	print "populating"
-	for next_pos in board.children_dict().keys():
+	children = board.children_dict()
+	print "children: %s" % children
+	for next_pos in children.keys():
 		print next_pos
 		curr_pos = board.head()
 		direction = DIRECTION_STRINGS[subtract_vectors(next_pos, curr_pos)]
