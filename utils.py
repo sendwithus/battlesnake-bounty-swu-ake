@@ -24,7 +24,7 @@ def redis_key(payload):
 	snakes = [snakes[key] for key in snake_ids]
 
 	# list of snakes
-	key = payload.get("game")
+	key = str(payload.get("game"))
 	for snake in snakes:
 		key += "_"
 		for x, y in snake.get("coords", []):
