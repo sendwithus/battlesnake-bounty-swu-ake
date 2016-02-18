@@ -189,9 +189,7 @@ class ComputeBoard(BaseBoard):
 		new_payload = copy.deepcopy(self.payload)
 		new_payload['turn'] += 1
 		based_on_move = None
-		import pprint
-		pprint.pprint(dict(self))
-		pprint.pprint(self._me)
+		print dict(self)
 		try:
 			# update each snake
 			for (name, (x, y)) in move_set:
