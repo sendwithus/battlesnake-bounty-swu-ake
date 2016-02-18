@@ -5,7 +5,7 @@ import pprint
 
 import settings
 from utils import redis_server, redis_key, subtract_vectors
-from board.redisBoard import redisBoard
+from board.redisBoard import RedisBoard
 
 application = Flask(__name__, static_url_path='/static')
 
@@ -20,7 +20,7 @@ def start():
 		data = request.get_json(force=True)
 		pprint.pprint(data)
 		game = data.get("game")
-		board = redisBoard(data)
+		board = RedisBoard(data)
 
 		redis_server().sadd("active_games", game)
 		redis_server().delete("%s_N" % game)
