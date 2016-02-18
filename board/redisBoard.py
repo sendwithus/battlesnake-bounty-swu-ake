@@ -3,12 +3,13 @@ import json
 
 import settings
 from board.computeBoard import ComputeBoard
+from utils import redis_server
 
 
 class RedisBoard(ComputeBoard):
 
 	def __init__(self, payload=None):
-		self.redis_server = redis.Redis(settings.REDIS_URL)
+		self.redis_server = redis_server()
 
 		# load from redis
 		if self.redis_server.exists(payload):
