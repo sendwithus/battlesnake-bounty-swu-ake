@@ -124,9 +124,10 @@ class ComputeBoard(BaseBoard):
 				closest_coord = (x, y)
 		print "CFD c"
 
-		(hx, hy) = self.head
+		(hx, hy) = self.head()
 		delta_x = hx - x
 		delta_y = hy - y
+		print "CFD d"
 
 		closest_food_directions = []
 		if delta_x > 0:
