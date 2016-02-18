@@ -17,12 +17,9 @@ def home():
 def set_head_board():
 	print "setting head board"
 	data = request.get_json(force=True)
-	print "a"
 	game = data.get("game")
-	print "b"
 	board = RedisBoard(data)
 
-	print "clearing"
 	redis_server().sadd("active_games", game)
 	redis_server().delete("%s_N" % game)
 	redis_server().delete("%s_S" % game)
@@ -30,7 +27,8 @@ def set_head_board():
 	redis_server().delete("%s_W" % game)
 
 	print "populating"
-	for next_pos in board.children_dict():
+	for next_pos in board.children_dict().keys():
+		print next_pos
 		curr_pos = board.head()
 		direction = DIRECTION_STRINGS[subtract_vectors(next_pos, curr_pos)]
 		for next_board in board.children_dict()[direction]:
