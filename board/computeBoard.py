@@ -116,10 +116,13 @@ class ComputeBoard(BaseBoard):
 
 		closest_dist = None
 		closest_coord = None
+		print "CFD a"
 		for (distance, controlled_by, (x, y)) in self.food_details():
+			print "CFD b"
 			if not closest_coord or (distance < closest_dist and controlled_by == settings.SNAKE_NAME):
 				closest_dist = distance
 				closest_coord = (x, y)
+		print "CFD c"
 
 		(hx, hy) = self.head
 		delta_x = hx - x
