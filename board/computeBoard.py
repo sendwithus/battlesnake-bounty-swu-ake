@@ -156,12 +156,15 @@ class ComputeBoard(BaseBoard):
 			choices = self.snake_choices(name)
 			move_options.append([(name, (x, y)) for (x, y) in choices])
 		possible_move_combinations = list(itertools.product(*move_options))
+		print "possible combos: %s" % possible_move_combinations
 
 		# generate all children
 		children = {}
 		for move_set in possible_move_combinations:
+			print move_set
 			based_on_move, new_payload = self._child_payload(move_set)
-			
+			print based_on_move
+			print new_payload
 			if child.based_on_move not in self._children.keys():
 				children[child.based_on_move] = []
 			children[child.based_on_move].append(child)
