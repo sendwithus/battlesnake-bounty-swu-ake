@@ -31,8 +31,8 @@ ARROWS = {
 SNAKE_NAME = "Adder Lovelace...ssssss"
 ME = {
     'name': SNAKE_NAME,
-    "color": "#00A800",  # guybrush green
-    "head": "http://svgporn.com/logos/gitboard.svg",
+    "color": "#f7931d",  # guybrush green
+    "head": "/static/cat-snake.svg",
 }
 
 import os
