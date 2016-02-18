@@ -33,7 +33,8 @@ def set_head_board():
 		print next_pos
 		curr_pos = board.head()
 		direction = DIRECTION_STRINGS[subtract_vectors(next_pos, curr_pos)]
-		for next_board in board.children_dict()[direction]:
+
+		for next_board in children[direction]:
 			board_direction_key = "%s_%s" % (game, direction)
 			print board_direction_key 
 			redis_server().sadd(board_direction_key, next_board)
