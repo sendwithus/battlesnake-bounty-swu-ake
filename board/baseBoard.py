@@ -54,8 +54,11 @@ class BaseBoard(object):
 		for s in self.all_snakes:
 			yield s.get('name')
 
-	@property
-	def head(self):
+	def head(self, name=None):
+		if name:
+			for s in self.all_snakes:
+				if s.get("name") == name:
+					return s.get("coords", [])[0]
 		return self._me.get("coords", [])[0]
 
 	@property
