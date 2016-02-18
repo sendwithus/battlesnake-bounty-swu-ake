@@ -4,8 +4,8 @@ import json
 import pprint
 
 import settings
-from utils import redis_server, redis_key
-
+from utils import redis_server, redis_key, subtract_vectors
+from board.redisBoard import redisBoard
 
 application = Flask(__name__, static_url_path='/static')
 
@@ -16,15 +16,23 @@ def home():
 
 @application.route('/start', methods=['POST'])
 def start():
-	data = request.get_json(force=True)
-	pprint.pprint(data)
-	game = data.get("game")
-
 	try:
+		data = request.get_json(force=True)
+		pprint.pprint(data)
+		game = data.get("game")
+		board = redisBoard(data)
+
 		redis_server().sadd("active_games", game)
-		redis_server().set("%s_current_board" % game, data)
-		redis_server().delete("%s_to_visit" % game)
-		redis_server().sadd("%s_to_visit" % game, request.data)
+		redis_server().delete("%s_N" % game)
+		redis_server().delete("%s_S" % game)
+		redis_server().delete("%s_E" % game)
+		redis_server().delete("%s_W" % game)
+		for next_pos in board.children_dict():
+			curr_pos = board.head()
+			direction = DIRECTION_STRINGS[subtract_vectors(next_pos, curr_pos)]
+			for next_board in board.children_dict()[direction]:
+				redis_server().sadd("%s_%s" % (game, direction), next_board)
+
 	except Exception as e:
 		print e 
 

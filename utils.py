@@ -16,6 +16,17 @@ def redis_server():
 def redis_key(payload):
 	return json.dumps(payload)
 
+def add_vectors(v1, v2):
+	(x1, y1) = v1
+	(x2, y2) = v2
+	return x1+x2, y1+y2
+
+def subtract_vectors(v1, v2):
+	(x1, y1) = v1
+	(x2, y2) = v2
+	return x1-x2, y1-y2
+
+
 	# # consistent order snakes
 	# snakes = {}
 	# for snake in payload.get("snakes", {}):

@@ -157,6 +157,7 @@ class ComputeBoard(BaseBoard):
 		children = {}
 		for move_set in possible_move_combinations:
 			based_on_move, new_payload = self._child_payload(move_set)
+			
 			if child.based_on_move not in self._children.keys():
 				children[child.based_on_move] = []
 			children[child.based_on_move].append(child)
