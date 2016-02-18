@@ -26,7 +26,7 @@ def start():
 		redis_server().delete("%s_S" % game)
 		redis_server().delete("%s_E" % game)
 		redis_server().delete("%s_W" % game)
-		
+
 		for next_pos in board.children_dict():
 			curr_pos = board.head()
 			direction = DIRECTION_STRINGS[subtract_vectors(next_pos, curr_pos)]
@@ -56,6 +56,7 @@ def end():
 @application.route('/move', methods=['POST'])
 def move():
 	game = "unknown"
+	move = "north"
 
 	try:
 		data = json.loads(request.data)
@@ -65,13 +66,9 @@ def move():
 		redis_server().set("%s_current_board" % game, key)
 		redis_server().delete("%s_to_visit" % game)
 		redis_server().sadd("%s_to_visit" % game, json.dumps(request.data))
-	except Exception as e:
-		print e 
 
-	time.sleep(0.5) # TODO: wait till 0.99 after this request came in
+		time.sleep(0.5) # TODO: wait till 0.99 after this request came in
 
-	move = "north"
-	try:
 		redis_server().get("%s_best_move" % game)
 	except Exception as e:
 		print e
