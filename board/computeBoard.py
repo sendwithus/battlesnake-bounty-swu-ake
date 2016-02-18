@@ -207,12 +207,14 @@ class ComputeBoard(BaseBoard):
 					snake_i += 1
 
 				# update snake
-				snake['age'] += 1
-				snake['health'] -= 1
-				del snake['coords'][-1]
-				snake['coords'].insert(0, (x, y))
-				new_payload.get("snakes", [])[snake_i] = snake
+				if snake:
+					snake['age'] += 1
+					snake['health'] -= 1
+					del snake['coords'][-1]
+					snake['coords'].insert(0, (x, y))
+					new_payload.get("snakes", [])[snake_i] = snake
 		except Exception as e:
 			print e
 
+		print "built new payload for: %s" % based_on_move
 		return based_on_move, new_payload
