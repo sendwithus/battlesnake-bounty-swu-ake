@@ -42,7 +42,7 @@ def set_head_board():
 
 @application.route('/start', methods=['POST'])
 def start():
-	set_head_board()
+	# set_head_board()
 	return jsonify({
 		"taunt": 'red october standing by" onload="alert(\'howdy\');',
 	})
