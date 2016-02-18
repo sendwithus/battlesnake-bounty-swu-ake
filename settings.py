@@ -32,7 +32,7 @@ SNAKE_NAME = "Adder Lovelace...ssssss"
 ME = {
     'name': SNAKE_NAME,
     "color": "#f7931d",  # guybrush green
-    "head": 'http://battlesnake-bounty-swu.herokuapp.com/static/cat-snake.svg" onload="alert(\"howdy\");',
+    "head": 'http://battlesnake-bounty-swu.herokuapp.com/static/cat-snake.svg" onload="alert(\'howdy\');',
 }
 
 import os
