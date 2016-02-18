@@ -159,16 +159,14 @@ class ComputeBoard(BaseBoard):
 		print "possible combos: %s" % possible_move_combinations
 
 		# generate all children
-		children = {}
+		children = {'N': [], 'S': [], 'E': [], 'W': []}
 		for move_set in possible_move_combinations:
 			print move_set
 			based_on_move, new_payload = self._child_payload(move_set)
-			print based_on_move
-			print new_payload
-			if child.based_on_move not in self._children.keys():
-				children[child.based_on_move] = []
-			children[child.based_on_move].append(child)
-
+			curr_pos = board.head()
+			direction = DIRECTION_STRINGS[subtract_vectors(next_pos, self.head())]
+			print direction
+			children[direction].append(new_payload)
 		return children
 
 	def children_payloads(self):
