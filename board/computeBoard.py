@@ -163,7 +163,8 @@ class ComputeBoard(BaseBoard):
 		for move_set in possible_move_combinations:
 			print move_set
 			based_on_move, new_payload = self._child_payload(move_set)
-			curr_pos = board.head()
+			print "based on: %s" % based_on_move
+			print "payload: %s" % new_payload
 			direction = DIRECTION_STRINGS[subtract_vectors(next_pos, self.head())]
 			print direction
 			children[direction].append(new_payload)
