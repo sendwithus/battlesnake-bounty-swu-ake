@@ -26,6 +26,17 @@ class RedisBoard(ComputeBoard):
 		print "building A"
 		super(RedisBoard, self).__init__(payload)
 		print "building B"
+		self.territory_control()
+		print "building C"
+		self.food_details()
+		print "building D"
+		self.closest_food_directions()
+		print "building E"
+		self.children_payloads()
+		print "building F"
+		self.board_quality()
+		print "building G"
+
 		data = {
 			'territory_control': self.territory_control(),
 			'food_details': self.food_details(),
@@ -33,7 +44,6 @@ class RedisBoard(ComputeBoard):
 			'children_payloads': self.children_payloads(),
 			'board_quality': self.board_quality(),
 		}
-		print "building C"
 		self.redis_server.set(self.payload, json.dumps(data))
 		print "building D"
 
