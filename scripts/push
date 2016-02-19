@@ -1,6 +1,6 @@
 #!/bin/bash
 #? push your code to both github, and heroku
-
+rm -r *.pyc
 git add -A
 git commit -m "$@"
 git push origin master
