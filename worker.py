@@ -9,21 +9,18 @@ from test import test
 from utils import redis_server
 
 
-def visit(game, data, redis_key):
-	print "visiting %s" % redis_key
-	print "data: %s" % data
-	print "redis_key: %s" % redis_key
-	payload = json.loads(data)
 
-	board = RedisBoard(payload=payload)
-	
+def visit(game, data, redis_key):
+	payload = json.loads(data)
+	board = RedisBoard(payload=payload)	
+
+	# visit self
 	quality_key = "%s_quality" % redis_key
-	print quality_key
 	quality = board.quality()
 	current_quality = redis_server().get(quality_key)
 	if not current_quality or quality > current_quality:
 		redis_server().set(quality)
-		print "%s: %s" % (quality_key, board.quality())
+	print "%s: %s" % (quality_key, board.quality())
 
 	# # visit children
 	# for child_payload in board.children_payloads():
