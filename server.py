@@ -4,7 +4,7 @@ import json
 import pprint
 
 import settings
-from utils import redis_server, redis_key, subtract_vectors
+from utils import redis_server, redis_key, subtract_vectors, best_move
 from board.redisBoard import RedisBoard
 
 application = Flask(__name__, static_url_path='/static')
@@ -89,25 +89,14 @@ def end():
 	return jsonify(settings.ME)
 
 
+
+
 @application.route('/move', methods=['POST'])
 def move():
 	set_head_board()
 	time.sleep(0.3) # TODO: wait till 0.99 after this request came in
+	move = best_move(game)
 	clear_game()
-
-	n = redis_server().get("%s_north_quality" % game)
-	s = redis_server().get("%s_south_quality" % game)
-	e = redis_server().get("%s_east_quality" % game)
-	w = redis_server().get("%s_west_quality" % game)
-	best = max([n, s, e, w])
-	print "%s, best is: %s" % (str([n, s, e, w]), best)
-	move = "north"
-	if s == best:
-		move = "south"
-	if e == best:
-		move = "east"
-	if w == best:
-		move = "west"
 
 	return jsonify({
 		"move": move,
