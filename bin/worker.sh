@@ -1,2 +1,2 @@
 #!/bin/bash
-python wsgi_worker.py
+python worker.py
