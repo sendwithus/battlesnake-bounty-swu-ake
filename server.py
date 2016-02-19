@@ -50,8 +50,6 @@ def set_head_board():
 
 	board = RedisBoard(data)
 	children = board.worstcase_children_dict()
-	import pprint
-	pprint.pprint(children)
 	for direction in children.keys():
 		payload = children[direction]
 		board_direction_key = "%s_%s" % (game, direction)
