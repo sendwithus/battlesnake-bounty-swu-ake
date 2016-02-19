@@ -12,8 +12,8 @@ from utils import redis_server
 
 def visit(game, data, redis_key):
 	payload = json.loads(data)
-	if not payload:
-		return
+	# if not payload:
+	# 	return
 	board = RedisBoard(payload)	
 
 	# visit self
@@ -22,7 +22,7 @@ def visit(game, data, redis_key):
 	current_quality = redis_server().get(quality_key)
 	if not current_quality or quality > current_quality:
 		redis_server().set(quality)
-		print "%s: %s" % (quality_key, board.quality())
+	print "%s: %s" % (quality_key, board.quality())
 
 	# # visit children
 	children = board.worstcase_children_dict()
@@ -34,6 +34,7 @@ print "Worker up and monitoring"
 while True:
 	for game in redis_server().smembers("active_games"):
 		for redis_key in ["%s_north" % game, "%s_south" % game, "%s_east" % game,"%s_west" % game]:
+
 			board_key = redis_server().spop(redis_key)
 			if game and board_key:
 				visit(game, board_key, redis_key)
