@@ -52,6 +52,12 @@ def set_head_board():
 	redis_server().set("%s_east_quality" % game, 0)
 	redis_server().set("%s_west_quality" % game, 0)
 
+	redis_server().set("%s_north_v" % game, 0)
+	redis_server().set("%s_south_v" % game, 0)
+	redis_server().set("%s_east_v" % game, 0)
+	redis_server().set("%s_west_v" % game, 0)
+
+
 	board = RedisBoard(data)
 	children = board.worstcase_children_dict()
 	for direction in children.keys():

@@ -23,6 +23,11 @@ def visit(game, data, redis_key):
 	if not current_quality or quality > current_quality:
 		redis_server().set(quality_key, quality)
 
+	# visit counter
+	visit_key = "%s_v" % redis_key
+	current_count = int(redis_server().get(visit_key))
+	redis_server().set(visit_key, current_count+1)
+
 	# # visit children
 	children = board.worstcase_children_dict()
 	for direction in children.keys():
