@@ -26,6 +26,7 @@ class ComputeBoard(BaseBoard):
 			if snake_status == "alive" and snake_length > 0:
 				ttl = 1
 				snake_coords = snake.get("coords", [])
+				print "snake is alive: %s" % snake_name
 				snake_coords.reverse()
 				for coord in snake_coords:
 					coord = tuple(coord)
