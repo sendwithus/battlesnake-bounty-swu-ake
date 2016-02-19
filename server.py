@@ -35,6 +35,7 @@ def set_head_board():
 
 @application.route('/start', methods=['POST'])
 def start():
+	data = request.get_json(force=True)
 	game = data.get("game")
 	redis_server().sadd("active_games", game)
 	set_head_board()
