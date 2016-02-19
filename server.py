@@ -18,12 +18,16 @@ def home():
 def nuke_redis():
 	for key in redis_server().keys('*'):
 		redis_server().delete(key)
+	return jsonify({'nuked': 'all the things'})
 
 @application.route('/4swu/redis/debug')
 def debug_redis():
 	data = {}
 	for key in redis_server().keys('*'):
-		data[key] = redis_server.get(key)
+		try:
+			data[key] = redis_server().get(key)
+		except Exception as e:
+			print e
 	return jsonify(data)
 
 def set_head_board():
