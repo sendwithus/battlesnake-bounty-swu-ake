@@ -28,8 +28,7 @@ def visit(game, data, redis_key):
 	children = board.worstcase_children_dict()
 	for direction in children.keys():
 		payload = children[direction]
-		board_direction_key = "%s_%s" % (game, direction)
-		redis_server().sadd(board_direction_key, json.dumps(payload))
+		redis_server().sadd(redis_key, json.dumps(payload))
 
 print "Worker up and monitoring"
 while True:
