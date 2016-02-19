@@ -15,9 +15,11 @@ class BaseBoard(object):
 		self._cells[coord][attr] = val
 
 	def get(self, coord, attr):
-		val = self._cells.get(coord, {}).get(attr)
-		if val:
-			return val
+		cell = self._cells.get(coord)
+		if cell:
+			val = cell.get(attr)
+			if val:
+				return val
 		return self.default_value(coord, attr)
 
 	def default_value(self, (x, y), attr):
@@ -27,12 +29,6 @@ class BaseBoard(object):
 				if 0 <= y < self.height:
 					return True
 			return False
-
-		if attr == "solid":
-			if 0 <= x < self.width:
-				if 0 <= y < self.height:
-					return False
-			return True
 
 		return {
 			'food': False
