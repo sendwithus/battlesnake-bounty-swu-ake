@@ -80,7 +80,8 @@ def start():
 def end():
 	data = json.loads(request.data)
 	try:
-		redis_server().srem("active_games", data.get("game"))
+		# redis_server().srem("active_games", data.get("game"))
+		clear_game()
 	except Exception as e:
 		print e 
 	return jsonify(settings.ME)
