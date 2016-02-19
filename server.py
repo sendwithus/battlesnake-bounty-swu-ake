@@ -94,22 +94,15 @@ def end():
 
 @application.route('/move', methods=['POST'])
 def move():
-	print "moving: A"
 	set_head_board()
-	print "moving: B"
-	time.sleep(0.5) # TODO: wait till 0.99 after this request came in
-	print "moving: C"
+	time.sleep(0.8)
 	data = json.loads(request.data)
 	move = best_move(data.get("game"))
-	print "moving: D"
 	clear_game()
-	print "moving: E"
-
 	response = {
 		"move": move,
 		"taunt": ""
 	}
-	print response
 	return jsonify(response)
 
 if __name__ == '__main__':

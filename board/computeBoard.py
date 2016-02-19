@@ -44,6 +44,7 @@ class ComputeBoard(BaseBoard):
 			else:
 				self.other_snake_names.append(snake.get("name", ""))
 
+		print payload
 
 	def board_quality(self):
 		if hasattr(self, "_board_quality"):
