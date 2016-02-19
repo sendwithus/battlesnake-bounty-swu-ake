@@ -50,6 +50,17 @@ def best_move(game):
 		'w': redis_server().get("%s_west_quality" % game),
 	}
 	best = max(qualities.values())
-	best_dir = [direction for direction in best.keys() if qualities[direction] == best][0]
+
+	best_dir = "north"
+	if qualities['n'] == best:
+		best_dir = 'north'
+	if qualities['s'] == best:
+		best_dir = 'south'
+	if qualities['e'] == best:
+		best_dir = 'east'		
+	if qualities['w'] == best:
+		best_dir = 'west'
+		
+
 	print "%s best is: %s" % (qualities, best_dir)
 	return best_dir
