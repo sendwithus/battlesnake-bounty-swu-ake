@@ -67,6 +67,7 @@ def move():
 	e = redis_server().get("%s_east_quality" % game)
 	w = redis_server().get("%s_west_quality" % game)
 	best = max([n, s, e, w])
+	print "%s, best is: %s" % (str([n, s, e, w]), best)
 	move = "north"
 	if s == best:
 		move = "south"
