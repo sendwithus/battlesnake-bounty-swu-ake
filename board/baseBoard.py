@@ -108,7 +108,7 @@ class BaseBoard(object):
 		for coord in self.adjacent_empty_cells(self.head()):
 			delta = subtract_vectors(coord, self.head())
 			direction = settings.DIRECTION_STRINGS[delta]
-			moves.append(moves)
+			moves.append(direction)
 
 		print "valid moves: %s" % moves
 		return moves
