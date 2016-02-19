@@ -6,7 +6,7 @@ import json
 from board.redisBoard import RedisBoard
 import settings
 from test import test
-from utils import redis_server
+from utils import redis_server, best_move
 
 
 
@@ -21,7 +21,7 @@ def visit(game, data, redis_key):
 	quality = board.quality()
 	current_quality = redis_server().get(quality_key)
 	if not current_quality or quality > current_quality:
-		redis_server().set(quality)
+		redis_server().set(quality_key, quality)
 	best_move(game)
 
 	# # visit children
