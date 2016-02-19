@@ -97,6 +97,15 @@ def end():
 	return jsonify(settings.ME)
 
 
+def debug():
+	data = json.loads(request.data)
+	game = data.get("game")
+	n = redis_server().get("%s_north_v" % game)
+	s = redis_server().get("%s_south_v" % game)
+	e = redis_server().get("%s_east_v" % game)
+	w = redis_server().get("%s_west_v" % game)
+	print "visits: %s" % {"n":n, "s":s, "e":e, "w":w}
+
 @application.route('/move', methods=['POST'])
 def move():
 	set_head_board()
@@ -104,6 +113,7 @@ def move():
 	data = json.loads(request.data)
 	move = best_move(data.get("game"))
 	clear_game()
+	debug()
 	response = {
 		"move": move,
 		"taunt": ""
