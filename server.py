@@ -9,14 +9,15 @@ from board.redisBoard import RedisBoard
 
 application = Flask(__name__, static_url_path='/static')
 
-for key in redis_server().keys('*'):
-	redis_server().delete(key)
-
 
 @application.route('/')
 def home():
 	return jsonify(settings.ME)
 
+@application.route('/4swu/nukeredis')
+def nuke_redis():
+	for key in redis_server().keys('*'):
+		redis_server().delete(key)
 
 def set_head_board():
 	data = request.get_json(force=True)
@@ -75,9 +76,9 @@ def end():
 @application.route('/move', methods=['POST'])
 def move():
 	set_head_board()
-	time.sleep(0.1) # TODO: wait till 0.99 after this request came in
+	time.sleep(0.3) # TODO: wait till 0.99 after this request came in
 	clear_game()
-	
+
 	n = redis_server().get("%s_north_quality" % game)
 	s = redis_server().get("%s_south_quality" % game)
 	e = redis_server().get("%s_east_quality" % game)
