@@ -167,6 +167,20 @@ class ComputeBoard(BaseBoard):
 			children[direction].append(new_payload)
 		return children
 
+	def worstcase_children_dict(self):
+		worst_children = {}
+		children = self.children_dict()
+		for direction in children.keys():
+			worst_value = 0
+			worst_payload = None
+			for child_payload in children[direction]:
+				quality = RedisBoard(child_payload).quality()
+				if not worst_payload or quality < worst_value:
+					worst_value = quality
+					worst_payload = child_payload
+			worst_children[direction] = worst_payload
+		return worst_children
+
 	def children_payloads(self):
 
 		# enumerate possible sensible move combinations for all snakes

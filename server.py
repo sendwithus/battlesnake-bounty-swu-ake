@@ -29,12 +29,11 @@ def set_head_board():
 	redis_server().set("%s_east_quality" % game, 0)
 	redis_server().set("%s_west_quality" % game, 0)
 
-	children = board.children_dict()
+	children = board.worstcase_children_dict()
 	for direction in children.keys():
-		for next_board in children[direction]:
-			board_direction_key = "%s_%s" % (game, direction)
-			print "child for: %s" % board_direction_key
-			redis_server().sadd(board_direction_key, json.dumps(next_board))
+		payload = children[direction]
+		board_direction_key = "%s_%s" % (game, direction)
+		redis_server().sadd(board_direction_key, json.dumps(payload))
 
 
 @application.route('/start', methods=['POST'])
