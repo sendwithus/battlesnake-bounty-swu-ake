@@ -28,9 +28,14 @@ class BaseBoard(object):
 					return True
 			return False
 
+		if attr == "solid":
+			if 0 <= x < self.width:
+				if 0 <= y < self.height:
+					return False
+			return True
+
 		return {
-			'food': False,
-			'solid': False
+			'food': False
 		}.get(attr)
 
 
