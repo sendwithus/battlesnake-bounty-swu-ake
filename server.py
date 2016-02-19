@@ -61,7 +61,19 @@ def end():
 def move():
 	set_head_board()
 	time.sleep(0.1) # TODO: wait till 0.99 after this request came in
-	move = redis_server().get("%s_best_move" % game, "north")
+
+	n = redis_server().get("%s_north_quality" % game)
+	s = redis_server().get("%s_south_quality" % game)
+	e = redis_server().get("%s_east_quality" % game)
+	w = redis_server().get("%s_west_quality" % game)
+	best = max([n, s, e, w])
+	move = "north"
+	if s == best:
+		move = "south"
+	if e == best:
+		move = "east"
+	if w == best:
+		move = "west"
 
 	return jsonify({
 		"move": move,
