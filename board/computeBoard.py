@@ -45,7 +45,7 @@ class ComputeBoard(BaseBoard):
 				self.other_snake_names.append(snake.get("name", ""))
 
 		for coord in payload.get("walls", []):
-			self.set(coord, "solid", True)
+			self.set(coord, "empty", False)
 
 	def board_quality(self):
 		if hasattr(self, "_board_quality"):
