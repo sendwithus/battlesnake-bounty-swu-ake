@@ -24,13 +24,16 @@ def visit(game, data, redis_key):
 	# 	if not redis_server().exists(child_payload):
 	# 		redis_server().sadd(redis_key, child_payload)
 
-print "Worker up and monitoring"
-while True:
-	for game in redis_server().smembers("active_games"):
-		for redis_key in ["%s_north" % game, "%s_south" % game, "%s_east" % game,"%s_west" % game]:
-			board_key = redis_server().spop(redis_key)
-			if game and board_key:
-				visit(game, board_key, redis_key)
+try:
+	print "Worker up and monitoring"
+	while True:
+		for game in redis_server().smembers("active_games"):
+			for redis_key in ["%s_north" % game, "%s_south" % game, "%s_east" % game,"%s_west" % game]:
+				board_key = redis_server().spop(redis_key)
+				if game and board_key:
+					visit(game, board_key, redis_key)
+				time.sleep(0)
 			time.sleep(0)
-		time.sleep(0)
-	time.sleep(0.1)
+		time.sleep(0.1)
+except Exception as e:
+	print e
