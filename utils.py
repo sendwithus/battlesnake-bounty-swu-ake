@@ -43,11 +43,15 @@ def subtract_vectors(v1, v2):
 	return x1-x2, y1-y2
 
 def best_move(game):
+	n = redis_server().get("%s_north_quality" % game)
+	s = redis_server().get("%s_south_quality" % game)
+	e = redis_server().get("%s_east_quality" % game)
+	w = redis_server().get("%s_west_quality" % game)
 	qualities = {
-		'n': int(redis_server().get("%s_north_quality" % game, 0)),
-		's': int(redis_server().get("%s_south_quality" % game, 0)),
-		'e': int(redis_server().get("%s_east_quality" % game, 0)),
-		'w': int(redis_server().get("%s_west_quality" % game, 0)),
+		'n': int(n) if n else 0,
+		's': int(s) if s else 0,
+		'e': int(e) if e else 0,
+		'w': int(w) if w else 0,
 	}
 	best = max(qualities.values())
 
