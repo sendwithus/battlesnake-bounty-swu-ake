@@ -93,15 +93,22 @@ def end():
 
 @application.route('/move', methods=['POST'])
 def move():
+	print "moving: A"
 	set_head_board()
+	print "moving: B"
 	time.sleep(0.3) # TODO: wait till 0.99 after this request came in
+	print "moving: C"
 	move = best_move(game)
+	print "moving: D"
 	clear_game()
+	print "moving: E"
 
-	return jsonify({
+	response = {
 		"move": move,
 		"taunt": ""
-	})
+	}
+	print response
+	return jsonify(response)
 
 if __name__ == '__main__':
 	application.debug = True
