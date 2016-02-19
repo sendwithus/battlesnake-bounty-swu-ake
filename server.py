@@ -8,6 +8,7 @@ from utils import redis_server, redis_key, subtract_vectors
 from board.redisBoard import RedisBoard
 
 application = Flask(__name__, static_url_path='/static')
+redis_server().delete("active_games")
 
 @application.route('/')
 def home():
