@@ -19,6 +19,13 @@ def nuke_redis():
 	for key in redis_server().keys('*'):
 		redis_server().delete(key)
 
+@application.route('/4swu/debugredis')
+def debug_redis():
+	data = {}
+	for key in redis_server().keys('*'):
+		data[key] = redis_server.get(key)
+	return jsonify(data)
+
 def set_head_board():
 	data = request.get_json(force=True)
 	game = data.get("game")
