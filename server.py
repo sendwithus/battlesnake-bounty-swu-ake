@@ -14,12 +14,12 @@ application = Flask(__name__, static_url_path='/static')
 def home():
 	return jsonify(settings.ME)
 
-@application.route('/4swu/nukeredis')
+@application.route('/4swu/redis/nuke')
 def nuke_redis():
 	for key in redis_server().keys('*'):
 		redis_server().delete(key)
 
-@application.route('/4swu/debugredis')
+@application.route('/4swu/redis/debug')
 def debug_redis():
 	data = {}
 	for key in redis_server().keys('*'):
