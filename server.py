@@ -29,6 +29,7 @@ def set_head_board():
 	for direction in children.keys():
 		for next_board in children[direction]:
 			board_direction_key = "%s_%s" % (game, direction)
+			print "child for: %s" % board_direction_key
 			redis_server().sadd(board_direction_key, next_board)
 
 
@@ -53,8 +54,8 @@ def end():
 @application.route('/move', methods=['POST'])
 def move():
 	set_head_board()
-	time.sleep(0.5) # TODO: wait till 0.99 after this request came in
-	move = redis_server().get("%s_best_move" % game)
+	time.sleep(0.1) # TODO: wait till 0.99 after this request came in
+	move = redis_server().get("%s_best_move" % game, "north")
 
 	return jsonify({
 		"move": move,
