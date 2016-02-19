@@ -66,7 +66,7 @@ def set_head_board():
 			print "payload is not json!: %s" % payload
 		board_direction_key = "%s_%s" % (game, direction)
 		redis_server().sadd(board_direction_key, json.dumps(payload))
-
+	return board
 
 def clear_game():
 	data = request.get_json(force=True)
@@ -108,10 +108,12 @@ def debug():
 
 @application.route('/move', methods=['POST'])
 def move():
-	set_head_board()
+	board = set_head_board()
 	time.sleep(0.5)
 	data = json.loads(request.data)
 	move = best_move(data.get("game"))
+	if move not in board.valid_moves():
+		move = random.choice(board.valid_moves())
 	clear_game()
 	debug()
 	response = {

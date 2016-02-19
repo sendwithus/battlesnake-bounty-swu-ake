@@ -1,4 +1,5 @@
 import settings
+from utils import subtract_vectors
 
 
 class BaseBoard(object):
@@ -101,6 +102,17 @@ class BaseBoard(object):
 			x, y = coord
 			if not self.get((x, y), 'solid'):
 				yield coord
+
+	def valid_moves(self):
+		moves = []
+		for coord in self.adjacent_empty_cells(self.head()):
+			delta = subtract_vectors(coord, self.head())
+			direction = settings.DIRECTION_STRINGS[delta]
+			moves.append(moves)
+
+		print "valid moves: %s" % moves
+		return moves
+
 
 	def snake(self, snake_id):
 		for snake in self._snakes:
