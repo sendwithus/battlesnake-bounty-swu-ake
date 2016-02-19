@@ -27,6 +27,7 @@ def debug_redis():
 		try:
 			data[key] = redis_server().get(key)
 		except Exception as e:
+			data[key] = "e"
 			print e
 	return jsonify(data)
 
