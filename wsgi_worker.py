@@ -7,7 +7,7 @@ from board.redisBoard import RedisBoard
 import settings
 from test import test
 from utils import redis_server
-
+import thread
 
 def visit(game, data, redis_key):
 	print "visiting %s" % redis_key
@@ -32,9 +32,8 @@ def visit(game, data, redis_key):
 # 	time.sleep(0)
 
 
-def application(environ, start_response):
-	# clear_redis()
-	# test()
+def worker_thread(name):
+	print "%s starting" name
 	while True:
 		for game in redis_server().smembers("active_games"):
 			print "considering game: %s" % game
@@ -45,3 +44,9 @@ def application(environ, start_response):
 				time.sleep(0)
 			time.sleep(0)
 		time.sleep(0)
+
+def application(environ, start_response):
+	# clear_redis()
+	# test()
+	thread.start_new_thread( worker_thread, ("Thread-1", ) )
+	return [b"Hello World"]
