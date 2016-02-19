@@ -29,7 +29,7 @@ class ComputeBoard(BaseBoard):
 				snake_coords.reverse()
 				for coord in snake_coords:
 					coord = tuple(coord)
-					self.set(coord, "solid", True)
+					self.set(coord, "empty", False)
 					self.set(coord, "controlled_by", snake_name)  # get snake UUID
 					self.set(coord, "ttl", ttl)
 					ttl += 1
