@@ -52,7 +52,8 @@ def set_head_board():
 	children = board.worstcase_children_dict()
 	for direction in children.keys():
 		payload = children[direction]
-		print "payload is: %s" % payload
+		if type(payload) != dict:
+			print "payload is not json!: %s" % payload
 		board_direction_key = "%s_%s" % (game, direction)
 		redis_server().sadd(board_direction_key, json.dumps(payload))
 
