@@ -174,6 +174,8 @@ class ComputeBoard(BaseBoard):
 		for direction in children.keys():
 			worst_value = 0
 			worst_payload = None
+			import pprint
+			pprint.pprint(children)
 			for child_payload in children[direction]:
 				quality = ComputeBoard(child_payload).quality()
 				if not worst_payload or quality < worst_value:
