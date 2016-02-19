@@ -10,7 +10,7 @@ from board.redisBoard import RedisBoard
 application = Flask(__name__, static_url_path='/static')
 
 for key in redis_server().keys('*'):
-	redis_server().rem(key)
+	redis_server().delete(key)
 
 
 @application.route('/')
