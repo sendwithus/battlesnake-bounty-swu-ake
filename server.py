@@ -26,9 +26,12 @@ def debug_redis():
 	for key in redis_server().keys('*'):
 		try:
 			data[key] = redis_server().get(key)
-		except Exception as e:
-			data[key] = "e"
-			print e
+		except:
+			try:
+				data[key] = list(redis_server().smembers("active_games"))
+			except Exception as e:
+				data[key] = str(e)
+				print e
 	return jsonify(data)
 
 def set_head_board():
