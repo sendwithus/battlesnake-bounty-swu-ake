@@ -29,6 +29,7 @@ ARROWS = {
 
 
 SNAKE_NAME = "Adder Lovelace...ssssss"
+SNAKE_ID = "ee925ec8-01f4-4f08-a05d-617a97cad866"
 ME = {
     'name': SNAKE_NAME,
     "color": "#f7931d",  # guybrush green

@@ -15,10 +15,7 @@ def home():
 
 
 def set_head_board():
-	print "setting head board"
 	data = request.get_json(force=True)
-	import pprint
-	pprint.pprint(data)
 	game = data.get("game")
 	board = RedisBoard(data)
 
@@ -28,19 +25,11 @@ def set_head_board():
 	redis_server().delete("%s_E" % game)
 	redis_server().delete("%s_W" % game)
 
-	print "populating"
 	children = board.children_dict()
-	print "children: %s" % children
-	for next_pos in children.keys():
-		print next_pos
-		curr_pos = board.head()
-		direction = DIRECTION_STRINGS[subtract_vectors(next_pos, curr_pos)]
-
+	for direction in children.keys():
 		for next_board in children[direction]:
 			board_direction_key = "%s_%s" % (game, direction)
-			print board_direction_key 
 			redis_server().sadd(board_direction_key, next_board)
-	print "done setting head board"
 
 
 @application.route('/start', methods=['POST'])

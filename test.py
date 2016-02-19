@@ -5,49 +5,45 @@ import requests
 import settings
 import redis
 
+
+
+
 def test():
-    snake_1 = {
-        "name": settings.SNAKE_NAME,
-        "status": "alive",
-        "message": "Moved north",
-        "taunt": "Let's rock!",
-        "age": 56,
-        "health": 83,
-        "coords": [ [1, 1], [1, 2], [2, 2], [2, 2], [2, 2] ],
-        "kills": 4,
-        "food": 12
-    }
-
-    snake_2 = {
-        "name": "Z",
-        "status": "alive",
-        "message": "Moved north",
-        "taunt": "Let's rock!",
-        "age": 56,
-        "health": 83,
-        "coords": [ [18, 18], [18, 17], [19, 17] ],
-        "kills": 4,
-        "food": 12
-    }
-
-
-    move_payload = {
-        "game": "hairy-cheese",
-        "mode": "advanced",
-        "turn": 4,
-        "height": 20,
-        "width": 20,
-        "snakes": [
-        	snake_1,
-        	snake_2,
-        ],
-        "food": [
-            [1, 2], [9, 3]
-        ]
-    }
-
+    payload = {
+        u'food': [[3, 1], [15, 4], [18, 13], [13, 4], [12, 17]],
+        u'game': u'halting-humility',
+        u'gold': [[10, 10]],
+        u'height': 20,
+        u'mode': u'advanced',
+        u'snakes': [{
+            u'age': 15,
+            u'coords': [[0, 15], [1, 15], [2, 15]],
+            u'gold': 0,
+            u'health': 85,
+            u'id': u'ee925ec8-01f4-4f08-a05d-617a97cad866',
+            u'kills': 0,
+            u'message': u'',
+            u'name': u'Sendwithus',
+            u'status': u'alive',
+            u'taunt': u''
+        },{
+            u'age': 15,
+            u'coords': [[4, 0], [4, 1], [4, 2]],
+            u'gold': 0,
+            u'health': 85,
+            u'id': u'3d2f2b54-6c65-402f-b1ea-75b72d2ccbfb',
+            u'kills': 0,
+            u'message': u'',
+            u'name': u'Trump Snake',
+            u'status': u'alive',
+            u'taunt': u'My net worth is many, many times that of Sendwithus'}],
+        u'turn': 15,
+        u'walls': [],
+        u'width': 20
+     }
+     
     start_url = "http://localhost:5000/start"
-    r = requests.post(start_url, json.dumps(move_payload))
+    r = requests.post(start_url, json.dumps(payload))
 
 if __name__ == '__main__':
     test()

@@ -28,7 +28,8 @@ class BaseBoard(object):
 			return False
 
 		return {
-			'food': False
+			'food': False,
+			'solid': False
 		}.get(attr)
 
 
@@ -54,12 +55,19 @@ class BaseBoard(object):
 		for s in self.all_snakes:
 			yield s.get('name')
 
+	@property
+	def all_snake_ids(self):
+		for s in self.all_snakes:
+			yield s.get('id')
+
 	def head(self, name=None):
 		if name:
 			for s in self.all_snakes:
 				if s.get("name") == name:
 					return s.get("coords", [])[0]
-		return self._me.get("coords", [])[0]
+		for s in self.all_snakes:
+			if s.get("id") == settings.SNAKE_ID:
+				return s.get("coords", [])[0]
 
 	@property
 	def north(self):
@@ -94,16 +102,16 @@ class BaseBoard(object):
 			if not self.get((x, y), 'solid'):
 				yield coord
 
-	def snake(self, snake_name):
+	def snake(self, snake_id):
 		for snake in self._snakes:
-			if snake.get("name", "") == snake_name:
+			if snake.get("id", "") == snake_id:
 				return snake
 
-	def snake_choices(self, snake_name=None):
-		if not snake_name:
-			snake_name = settings.SNAKE_NAME
+	def snake_choices(self, snake_id=None):
+		if not snake_id:
+			snake_id = settings.SNAKE_ID
 
-		head = self.snake(snake_name).get('coords')[0]
+		head = self.snake(snake_id).get('coords')[0]
 		return self.adjacent_empty_cells(head)
 
 	def add_vectors(self, v1, v2):

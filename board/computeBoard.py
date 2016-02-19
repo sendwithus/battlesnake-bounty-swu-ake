@@ -117,18 +117,14 @@ class ComputeBoard(BaseBoard):
 
 		closest_dist = None
 		closest_coord = None
-		print "CFD a"
 		for (distance, controlled_by, (x, y)) in self.food_details():
-			print "CFD b"
 			if not closest_coord or (distance < closest_dist and controlled_by == settings.SNAKE_NAME):
 				closest_dist = distance
 				closest_coord = (x, y)
-		print "CFD c"
 
 		(hx, hy) = self.head()
 		delta_x = hx - x
 		delta_y = hy - y
-		print "CFD d"
 
 		closest_food_directions = []
 		if delta_x > 0:
@@ -153,23 +149,21 @@ class ComputeBoard(BaseBoard):
 
 		# enumerate possible sensible move combinations for all snakes
 		move_options = []
-		for name in self.all_snake_names:
-			choices = self.snake_choices(name)
-			move_options.append([(name, (x, y)) for (x, y) in choices])
+		for snake_id in self.all_snake_ids:
+			choices = list(self.snake_choices(snake_id))
+			move_options.append([(snake_id, (x, y)) for (x, y) in choices])
 		possible_move_combinations = list(itertools.product(*move_options))
-		import pprint
-		pprint.pprint(self.payload)
-		print "possible combos: %s" % possible_move_combinations
 
 		# generate all children
-		children = {'N': [], 'S': [], 'E': [], 'W': []}
+		children = {
+			'north': [],
+			'south': [],
+			'east': [],
+			'west': [],
+		}
 		for move_set in possible_move_combinations:
-			print move_set
 			based_on_move, new_payload = self._child_payload(move_set)
-			print "based on: %s" % based_on_move
-			print "payload: %s" % new_payload
 			direction = settings.DIRECTION_STRINGS[subtract_vectors(based_on_move, self.head())]
-			print direction
 			children[direction].append(new_payload)
 		return children
 
@@ -177,9 +171,9 @@ class ComputeBoard(BaseBoard):
 
 		# enumerate possible sensible move combinations for all snakes
 		move_options = []
-		for name in self.all_snake_names:
-			choices = self.snake_choices(name)
-			move_options.append([(name, (x, y)) for (x, y) in choices])
+		for snake_id in self.all_snake_id:
+			choices = self.snake_choices(id=snake_id)
+			move_options.append([(snake_id, (x, y)) for (x, y) in choices])
 		possible_move_combinations = list(itertools.product(*move_options))
 
 		payloads = []
@@ -192,32 +186,27 @@ class ComputeBoard(BaseBoard):
 		new_payload = copy.deepcopy(self.payload)
 		new_payload['turn'] += 1
 		based_on_move = None
-		print dir(self)
-		try:
-			# update each snake
-			for (name, (x, y)) in move_set:
-				print " %s: %s,%s" % (name, x, y)
-				# keep track of our move
-				if name == "Sendwithus":  # TODO: FIX MASSIVE HACK
-					based_on_move = (x, y)
 
-				# find snake
-				snake = None
-				snake_i = 0
-				for snake in new_payload.get("snakes", []):
-					if snake.get("name") == name:
-						break
-					snake_i += 1
+		# update each snake
+		for (snake_id, (x, y)) in move_set:
+			# keep track of our move
+			if snake_id == settings.SNAKE_ID:  # TODO: FIX MASSIVE HACK
+				based_on_move = (x, y)
 
-				# update snake
-				if snake:
-					snake['age'] += 1
-					snake['health'] -= 1
-					del snake['coords'][-1]
-					snake['coords'].insert(0, (x, y))
-					new_payload.get("snakes", [])[snake_i] = snake
-		except Exception as e:
-			print e
+			# find snake
+			snake = None
+			snake_i = 0
+			for snake in new_payload.get("snakes", []):
+				if snake.get("id") == snake_id:
+					break
+				snake_i += 1
 
-		print "built new payload for: %s" % based_on_move
+			# update snake
+			if snake:
+				snake['age'] += 1
+				snake['health'] -= 1
+				del snake['coords'][-1]
+				snake['coords'].insert(0, (x, y))
+				new_payload.get("snakes", [])[snake_i] = snake
+
 		return based_on_move, new_payload

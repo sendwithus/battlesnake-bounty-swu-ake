@@ -13,7 +13,6 @@ class RedisBoard(ComputeBoard):
 
 		# # load from redis
 		# if self.redis_server.exists(payload):
-		# 	print "loading from redis"
 		# 	data = self.redis_server.get(payload)
 		# 	data = json.loads(data)
 		# 	self._territory_control = data.get('territory_control')
@@ -23,19 +22,12 @@ class RedisBoard(ComputeBoard):
 		# 	return
 
 		# cache to redis
-		print "building A"
 		super(RedisBoard, self).__init__(payload)
-		# print "building B"
 		# self.territory_control()
-		# print "building C"
 		# self.food_details()
-		# print "building D"
 		# self.closest_food_directions()
-		# print "building E"
 		# self.children_payloads()
-		# print "building F"
 		# self.board_quality()
-		# print "building G"
 
 		# data = {
 		# 	'territory_control': self.territory_control(),
@@ -46,7 +38,6 @@ class RedisBoard(ComputeBoard):
 		# }
 		data = {}
 		self.redis_server.set(self.payload, json.dumps(data))
-		print "building D"
 
 	def territory_control(self):
 		if not hasattr(self, '_territory_control'):
