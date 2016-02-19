@@ -10,6 +10,7 @@ class RedisBoard(ComputeBoard):
 
 	def __init__(self, payload=None):
 		self.redis_server = redis_server()
+		super(RedisBoard, self).__init__(payload)
 
 		# # load from redis
 		# if self.redis_server.exists(payload):
@@ -22,7 +23,6 @@ class RedisBoard(ComputeBoard):
 		# 	return
 
 		# cache to redis
-		super(RedisBoard, self).__init__(payload)
 		# self.territory_control()
 		# self.food_details()
 		# self.closest_food_directions()

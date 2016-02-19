@@ -21,7 +21,6 @@ def home():
 def set_head_board():
 	data = request.get_json(force=True)
 	game = data.get("game")
-	board = RedisBoard(data)
 
 	redis_server().delete("%s_north" % game)
 	redis_server().delete("%s_south" % game)
@@ -32,12 +31,25 @@ def set_head_board():
 	redis_server().set("%s_east_quality" % game, 0)
 	redis_server().set("%s_west_quality" % game, 0)
 
+	board = RedisBoard(data)
 	children = board.worstcase_children_dict()
 	for direction in children.keys():
 		payload = children[direction]
 		board_direction_key = "%s_%s" % (game, direction)
 		redis_server().sadd(board_direction_key, json.dumps(payload))
 
+def clear_game():
+	data = request.get_json(force=True)
+	game = data.get("game")
+
+	redis_server().delete("%s_north" % game)
+	redis_server().delete("%s_south" % game)
+	redis_server().delete("%s_east" % game)
+	redis_server().delete("%s_west" % game)
+	redis_server().set("%s_north_quality" % game, 0)
+	redis_server().set("%s_south_quality" % game, 0)
+	redis_server().set("%s_east_quality" % game, 0)
+	redis_server().set("%s_west_quality" % game, 0)
 
 @application.route('/start', methods=['POST'])
 def start():
@@ -64,7 +76,8 @@ def end():
 def move():
 	set_head_board()
 	time.sleep(0.1) # TODO: wait till 0.99 after this request came in
-
+	clear_game()
+	
 	n = redis_server().get("%s_north_quality" % game)
 	s = redis_server().get("%s_south_quality" % game)
 	e = redis_server().get("%s_east_quality" % game)
