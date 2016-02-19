@@ -3,6 +3,7 @@ from flask import Flask, render_template, jsonify, request
 import json
 import pprint
 import time
+import random
 
 import settings
 from utils import redis_server, redis_key, subtract_vectors, best_move
