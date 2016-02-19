@@ -37,7 +37,7 @@ def application(environ, start_response):
 	# test()
 	while True:
 		for game in redis_server().smembers("active_games"):
-			print "considering optiosn for game: %s" % game
+			print "considering game: %s" % game
 			for redis_key in ["%s_north" % game, "%s_south" % game, "%s_east" % game,"%s_west" % game]:
 				board_key = redis_server().spop(redis_key)
 				if game and board_key:
