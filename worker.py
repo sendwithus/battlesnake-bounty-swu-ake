@@ -19,7 +19,9 @@ def visit(game, data, redis_key):
 	# visit self
 	quality_key = "%s_quality" % redis_key
 	quality = board.quality()
-	current_quality = int(redis_server().get(quality_key))
+	current_quality = redis_server().get(quality_key)
+	current_quality = 0 if current_quality == 'None' else int(current_quality)
+	
 	if not current_quality or quality > current_quality:
 		redis_server().set(quality_key, quality)
 
