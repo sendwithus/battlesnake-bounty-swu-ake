@@ -106,6 +106,7 @@ def debug():
 	w = redis_server().get("%s_west_v" % game)
 	print "visits: %s" % {"n":n, "s":s, "e":e, "w":w}
 
+
 @application.route('/move', methods=['POST'])
 def move():
 	board = set_head_board()
@@ -113,7 +114,10 @@ def move():
 	data = json.loads(request.data)
 	move = best_move(data.get("game"))
 	if move not in board.valid_moves():
+		bad_move = move
 		move = random.choice(board.valid_moves())
+		print "%s is an invalid move, randomly choosing %s instead" % (bad_move, move)
+
 	clear_game()
 	debug()
 	response = {
