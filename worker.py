@@ -11,7 +11,11 @@ from utils import redis_server
 
 def visit(game, data, redis_key):
 	print "visiting %s" % redis_key
-	board = RedisBoard(payload=json.loads(data))
+	print "data: %s" % data
+	print "redis_key: %s" % redis_key
+	payload = json.loads(data)
+
+	board = RedisBoard(payload=payload)
 	redis_server().add("%s_quality" % redis_key, board.quality())
 
 	# # visit children
@@ -22,7 +26,6 @@ def visit(game, data, redis_key):
 
 while True:
 	for game in redis_server().smembers("active_games"):
-		print "considering optiosn for game: %s" % game
 		for redis_key in ["%s_north" % game, "%s_south" % game, "%s_east" % game,"%s_west" % game]:
 			board_key = redis_server().spop(redis_key)
 			if game and board_key:

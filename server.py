@@ -30,7 +30,7 @@ def set_head_board():
 		for next_board in children[direction]:
 			board_direction_key = "%s_%s" % (game, direction)
 			print "child for: %s" % board_direction_key
-			redis_server().sadd(board_direction_key, next_board)
+			redis_server().sadd(board_direction_key, json.dumps(next_board))
 
 
 @application.route('/start', methods=['POST'])
