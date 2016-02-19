@@ -36,8 +36,8 @@ class RedisBoard(ComputeBoard):
 		# 	'children_payloads': self.children_payloads(),
 		# 	'board_quality': self.board_quality(),
 		# }
-		data = {}
-		self.redis_server.set(self.payload, json.dumps(data))
+		# data = {}
+		# self.redis_server.set(self.payload, json.dumps(data))
 
 	def territory_control(self):
 		if not hasattr(self, '_territory_control'):
@@ -58,3 +58,6 @@ class RedisBoard(ComputeBoard):
 		if not hasattr(self, '_children_payloads'):
 			self._children_payloads = super(RedisBoard, self).children_payloads()
 		return self._children_payloads
+
+	def quality(self):
+		return self.territory_control().get('Sendwithus')

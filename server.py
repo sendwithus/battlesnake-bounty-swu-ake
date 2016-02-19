@@ -24,6 +24,10 @@ def set_head_board():
 	redis_server().delete("%s_south" % game)
 	redis_server().delete("%s_east" % game)
 	redis_server().delete("%s_west" % game)
+	redis_server().set("%s_north_quality" % game, 0)
+	redis_server().set("%s_south_quality" % game, 0)
+	redis_server().set("%s_east_quality" % game, 0)
+	redis_server().set("%s_west_quality" % game, 0)
 
 	children = board.children_dict()
 	for direction in children.keys():

@@ -16,7 +16,14 @@ def visit(game, data, redis_key):
 	payload = json.loads(data)
 
 	board = RedisBoard(payload=payload)
-	redis_server().add("%s_quality" % redis_key, board.quality())
+	
+	quality_key = "%s_quality" % redis_key
+	print quality_key
+	quality = board.quality()
+	current_quality = redis_server().get(quality_key)
+	if not current_quality or quality > current_quality:
+		redis_server().set(quality)
+		print "%s: %s" % (quality_key, board.quality())
 
 	# # visit children
 	# for child_payload in board.children_payloads():
