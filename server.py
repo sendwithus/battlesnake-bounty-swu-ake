@@ -20,7 +20,6 @@ def set_head_board():
 	game = data.get("game")
 	board = RedisBoard(data)
 
-	redis_server().sadd("active_games", game)
 	redis_server().delete("%s_north" % game)
 	redis_server().delete("%s_south" % game)
 	redis_server().delete("%s_east" % game)
@@ -31,13 +30,12 @@ def set_head_board():
 		for next_board in children[direction]:
 			board_direction_key = "%s_%s" % (game, direction)
 			print "child for: %s" % board_direction_key
-			# import pprint
-			# pprint.pprint(next_board)
 			redis_server().sadd(board_direction_key, next_board)
 
 
 @application.route('/start', methods=['POST'])
 def start():
+	redis_server().sadd("active_games", game)
 	set_head_board()
 	return jsonify({
 		"taunt": '',

@@ -1,2 +1,2 @@
 #!/bin/bash
-gunicorn wsgi_worker
+python wsgi_worker.py
