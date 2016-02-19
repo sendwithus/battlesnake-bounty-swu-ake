@@ -95,7 +95,7 @@ def end():
 @application.route('/move', methods=['POST'])
 def move():
 	set_head_board()
-	time.sleep(0.8)
+	time.sleep(0.5)
 	data = json.loads(request.data)
 	move = best_move(data.get("game"))
 	clear_game()
