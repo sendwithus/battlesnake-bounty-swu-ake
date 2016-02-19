@@ -33,8 +33,8 @@ def debug_redis():
 def set_head_board():
 	data = request.get_json(force=True)
 	game = data.get("game")
-	redis_server().sadd("active_games", game)
-	
+
+	redis_server().sadd("active_games", str(game))
 	redis_server().delete("%s_north" % game)
 	redis_server().delete("%s_south" % game)
 	redis_server().delete("%s_east" % game)
