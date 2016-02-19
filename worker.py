@@ -22,7 +22,6 @@ def visit(game, data, redis_key):
 	current_quality = int(redis_server().get(quality_key))
 	if not current_quality or quality > current_quality:
 		redis_server().set(quality_key, quality)
-	best_move(game)
 
 	# # visit children
 	children = board.worstcase_children_dict()
