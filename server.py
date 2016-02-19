@@ -15,11 +15,13 @@ application = Flask(__name__, static_url_path='/static')
 def home():
 	return jsonify(settings.ME)
 
+
 @application.route('/4swu/redis/nuke')
 def nuke_redis():
 	for key in redis_server().keys('*'):
 		redis_server().delete(key)
 	return jsonify({'nuked': 'all the things'})
+
 
 @application.route('/4swu/redis/debug')
 def debug_redis():
@@ -34,6 +36,7 @@ def debug_redis():
 				data[key] = str(e)
 				print e
 	return jsonify(data)
+
 
 def set_head_board():
 	data = request.get_json(force=True)
@@ -58,6 +61,7 @@ def set_head_board():
 		board_direction_key = "%s_%s" % (game, direction)
 		redis_server().sadd(board_direction_key, json.dumps(payload))
 
+
 def clear_game():
 	data = request.get_json(force=True)
 	game = data.get("game")
@@ -70,6 +74,7 @@ def clear_game():
 	redis_server().set("%s_south_quality" % game, 0)
 	redis_server().set("%s_east_quality" % game, 0)
 	redis_server().set("%s_west_quality" % game, 0)
+
 
 @application.route('/start', methods=['POST'])
 def start():
@@ -88,8 +93,6 @@ def end():
 	except Exception as e:
 		print e 
 	return jsonify(settings.ME)
-
-
 
 
 @application.route('/move', methods=['POST'])

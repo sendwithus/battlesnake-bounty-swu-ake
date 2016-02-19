@@ -39,5 +39,5 @@ while True:
 			if game and board_key:
 				visit(game, board_key, redis_key)
 			time.sleep(0)
-		time.sleep(0.1)
-	time.sleep(0.1)
+		time.sleep(0)
+	time.sleep(0)
