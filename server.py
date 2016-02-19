@@ -99,7 +99,8 @@ def move():
 	print "moving: B"
 	time.sleep(0.5) # TODO: wait till 0.99 after this request came in
 	print "moving: C"
-	move = best_move(game)
+	data = json.loads(request.data)
+	move = best_move(data.get("game"))
 	print "moving: D"
 	clear_game()
 	print "moving: E"
