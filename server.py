@@ -20,18 +20,18 @@ def set_head_board():
 	board = RedisBoard(data)
 
 	redis_server().sadd("active_games", game)
-	redis_server().delete("%s_N" % game)
-	redis_server().delete("%s_S" % game)
-	redis_server().delete("%s_E" % game)
-	redis_server().delete("%s_W" % game)
+	redis_server().delete("%s_north" % game)
+	redis_server().delete("%s_south" % game)
+	redis_server().delete("%s_east" % game)
+	redis_server().delete("%s_west" % game)
 
 	children = board.children_dict()
 	for direction in children.keys():
 		for next_board in children[direction]:
 			board_direction_key = "%s_%s" % (game, direction)
 			print "child for: %s" % board_direction_key
-			import pprint
-			pprint.pprint(next_board)
+			# import pprint
+			# pprint.pprint(next_board)
 			redis_server().sadd(board_direction_key, next_board)
 
 
