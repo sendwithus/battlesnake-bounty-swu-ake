@@ -48,10 +48,10 @@ def best_move(game):
 	e = redis_server().get("%s_east_quality" % game)
 	w = redis_server().get("%s_west_quality" % game)
 	qualities = {
-		'n': int(n) if n else 0,
-		's': int(s) if s else 0,
-		'e': int(e) if e else 0,
-		'w': int(w) if w else 0,
+		'n': int(n) if n != 'None' else 0,
+		's': int(s) if s != 'None' else 0,
+		'e': int(e) if e != 'None' else 0,
+		'w': int(w) if w != 'None' else 0,
 	}
 	best = max(qualities.values())
 
