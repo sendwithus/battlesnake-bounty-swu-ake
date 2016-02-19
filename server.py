@@ -2,6 +2,7 @@
 from flask import Flask, render_template, jsonify, request
 import json
 import pprint
+import time
 
 import settings
 from utils import redis_server, redis_key, subtract_vectors, best_move
@@ -96,7 +97,7 @@ def move():
 	print "moving: A"
 	set_head_board()
 	print "moving: B"
-	time.sleep(0.3) # TODO: wait till 0.99 after this request came in
+	time.sleep(0.5) # TODO: wait till 0.99 after this request came in
 	print "moving: C"
 	move = best_move(game)
 	print "moving: D"
