@@ -79,11 +79,11 @@ def start():
 @application.route('/end', methods=['POST'])
 def end():
 	data = json.loads(request.data)
-	try:
-		# redis_server().srem("active_games", data.get("game"))
-		# clear_game()
-	except Exception as e:
-		print e 
+	# try:
+	# 	# redis_server().srem("active_games", data.get("game"))
+	# 	# clear_game()
+	# except Exception as e:
+	# 	print e 
 	return jsonify(settings.ME)
 
 
