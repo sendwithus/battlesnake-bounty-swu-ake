@@ -6,7 +6,7 @@ class BaseBoard(object):
 	def __init__(self, payload):
 		self.payload = payload
 		self._cells = {}
-		self.game_name = self.payload.get("game")
+		self.game_name = self.payload.get("game") if self.payload else ""
 
 	def set(self, coord, attr, val):
 		if coord not in self._cells.keys():

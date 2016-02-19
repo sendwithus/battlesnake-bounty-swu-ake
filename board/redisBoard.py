@@ -58,6 +58,3 @@ class RedisBoard(ComputeBoard):
 		if not hasattr(self, '_children_payloads'):
 			self._children_payloads = super(RedisBoard, self).children_payloads()
 		return self._children_payloads
-
-	def quality(self):
-		return self.territory_control().get('Sendwithus')

@@ -65,7 +65,8 @@ class ComputeBoard(BaseBoard):
 
 	def territory_control(self):
 		if hasattr(self, "_territory_control"):
-			return self._territory_control
+			if type(self._territory_control) == int:
+				return self._territory_control
 
 		territory_edges = [tuple(snake.get('coords')[0]) for snake in self.all_snakes]
 		territory_control = {}
@@ -174,7 +175,7 @@ class ComputeBoard(BaseBoard):
 			worst_value = 0
 			worst_payload = None
 			for child_payload in children[direction]:
-				quality = RedisBoard(child_payload).quality()
+				quality = ComputeBoard(child_payload).quality()
 				if not worst_payload or quality < worst_value:
 					worst_value = quality
 					worst_payload = child_payload
@@ -224,3 +225,6 @@ class ComputeBoard(BaseBoard):
 				new_payload.get("snakes", [])[snake_i] = snake
 
 		return based_on_move, new_payload
+
+	def quality(self):
+		return self.territory_control().get('Sendwithus')
