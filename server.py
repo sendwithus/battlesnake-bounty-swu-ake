@@ -30,6 +30,8 @@ def set_head_board():
 		for next_board in children[direction]:
 			board_direction_key = "%s_%s" % (game, direction)
 			print "child for: %s" % board_direction_key
+			import pprint
+			pprint.pprint(next_board)
 			redis_server().sadd(board_direction_key, next_board)
 
 
