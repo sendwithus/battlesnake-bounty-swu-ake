@@ -33,7 +33,7 @@ def visit(game, data, redis_key):
 
 
 def worker_thread(name):
-	print "%s starting" name
+	print "%s starting" % name
 	while True:
 		for game in redis_server().smembers("active_games"):
 			print "considering game: %s" % game
