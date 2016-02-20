@@ -12,9 +12,9 @@ from utils import redis_server, best_move
 def update_quality(board):
 	quality_key = "%s_quality" % redis_key
 	quality = board.quality()
+	print "quality: %s" % quality
 	quality = sum(quality.values())
 	current_quality = redis_server().get(quality_key)
-	print "quality: %s" % quality
 	try:
 		current_quality = int(current_quality)
 

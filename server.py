@@ -116,11 +116,12 @@ def move():
 	move = best_move(data.get("game"), board)
 
 	clear_game()
-	# debug()
+	debug()
 	response = {
 		"move": move,
 		"taunt": ""
 	}
+	print response
 	return jsonify(response)
 
 if __name__ == '__main__':
