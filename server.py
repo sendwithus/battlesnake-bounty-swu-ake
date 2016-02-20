@@ -114,6 +114,10 @@ def move():
 	time.sleep(0.5)
 	data = json.loads(request.data)
 	move = best_move(data.get("game"))
+	if len(board.valid_moves()) == 4:
+		for coord in self._cells.key():
+			print "%s:%s" % (coord, self._cells.get(coord))
+
 	if move not in board.valid_moves():
 		bad_move = move
 		move = random.choice(board.valid_moves())

@@ -65,6 +65,6 @@ def best_move(game):
 	if qualities['w'] == best:
 		best_dir = 'west'
 		
-
 	print "%s best is: %s" % (qualities, best_dir)
+
 	return best_dir
