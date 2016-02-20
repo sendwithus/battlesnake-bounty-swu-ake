@@ -12,7 +12,7 @@ from utils import redis_server, best_move
 def update_quality(board):
 	quality_key = "%s_quality" % redis_key
 	quality = board.quality()
-	print quality
+	# print quality
 	quality = sum(quality.values())
 	current_quality = redis_server().get(quality_key)
 
