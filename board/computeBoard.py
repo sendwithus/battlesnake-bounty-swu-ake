@@ -208,5 +208,5 @@ class ComputeBoard(BaseBoard):
 		return {
 			"control": board_control,
 			"food": approach_food,
-			"health": 
+			"health": health,
 			"time": -self.payload.get("turn", 1)*3}
