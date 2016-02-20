@@ -152,6 +152,9 @@ class BaseBoard(object):
 		print "heads: %s" % self.head()
 		print "adjacent_cells: %s" % list(self.adjacent_empty_cells(self.head()))
 		print "valid moves: %s" % moves
+		if len(list(self.adjacent_empty_cells(self.head()))):
+			print "%s:%s" % (coord, self._cells.get(coord))
+			
 		# print "payload:"
 		# import pprint
 		# pprint.pprint(self.payload)
