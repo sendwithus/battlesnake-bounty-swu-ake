@@ -46,6 +46,9 @@ class ComputeBoard(BaseBoard):
 		for coord in payload.get("walls", []):
 			self.set(coord, "empty", False)
 
+		for coord in self._coords.keys():
+			print "%s: %s" % (coord, self._coords.get(coord))
+
 	def board_quality(self):
 		if hasattr(self, "_board_quality"):
 			return self._board_quality

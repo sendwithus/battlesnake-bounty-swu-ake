@@ -37,7 +37,7 @@ def visit(game, payload, redis_key):
 	board = RedisBoard(payload)	
 	update_quality(board)
 	update_visits(board)
-	visit_children(board, redis_key)
+	# visit_children(board, redis_key)
 
 
 def visit_children(board, redis_key):
