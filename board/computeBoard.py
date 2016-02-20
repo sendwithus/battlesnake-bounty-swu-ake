@@ -48,7 +48,7 @@ class ComputeBoard(BaseBoard):
 		food_details = []
 		for coord in self.food:
 			(x, y) = coord
-			(hx, hy) = self.head
+			(hx, hy) = self.head()
 			distance = abs(x - hx) + abs(y - hy)
 			controlled_by = self.get((x, y), 'controlled_by')
 			food_details.append((distance, controlled_by, (x,y)))
@@ -57,7 +57,8 @@ class ComputeBoard(BaseBoard):
 		return food_details
 
 	def distance_to_closest_food(self):
-		distances = [dist for (dist, ctrl, coord) in self.food_details() if ctrl == self._me.get("name")]
+		distances = [dist for (dist, ctrl, coord) in self.food_details() if ctrl == settings.SNAKE_ID]
+		print distances
 		return min(distances)
 
 	def closest_food_directions(self):
@@ -67,7 +68,7 @@ class ComputeBoard(BaseBoard):
 		closest_dist = None
 		closest_coord = None
 		for (distance, controlled_by, (x, y)) in self.food_details():
-			if not closest_coord or (distance < closest_dist and controlled_by == settings.SNAKE_NAME):
+			if not closest_coord or (distance < closest_dist and controlled_by == settings.SNAKE_ID):
 				closest_dist = distance
 				closest_coord = (x, y)
 
@@ -154,7 +155,7 @@ class ComputeBoard(BaseBoard):
 		# update each snake
 		for (snake_id, (x, y)) in move_set:
 			# keep track of our move
-			if snake_id == settings.SNAKE_ID:  # TODO: FIX MASSIVE HACK
+			if snake_id == settings.SNAKE_ID:
 				based_on_move = (x, y)
 
 			# find snake
@@ -183,7 +184,7 @@ class ComputeBoard(BaseBoard):
 		# board control
 		ctrl = self.territory_control()
 		avg_control = sum(ctrl.values())/len(ctrl.keys())
-		my_control = ctrl[self._me.get("name")]
+		my_control = ctrl[self.snake(settings.SNAKE_ID).get("id")]
 		board_control = my_control/avg_control
 
 		# approaching food

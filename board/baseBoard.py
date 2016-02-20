@@ -23,7 +23,7 @@ class BaseBoard(object):
 		for snake in self.all_snakes:
 			snake_status = snake.get("status", "dead")
 			snake_length = len(snake.get("coords", []))
-			snake_name = snake.get("name", "")
+			snake_id = snake.get("id", "")
 			if snake_status == "alive" and snake_length > 0:
 				ttl = 1
 				snake_coords = copy.deepcopy(snake.get("coords", []))
@@ -31,7 +31,7 @@ class BaseBoard(object):
 				for coord in snake_coords:
 					coord = tuple(coord)
 					self.set(coord, "empty", False)
-					self.set(coord, "controlled_by", snake_name)  # get snake UUID
+					self.set(coord, "controlled_by", snake_id)  # get snake UUID
 					self.set(coord, "ttl", ttl)
 					ttl += 1
 				head = tuple(snake_coords[-1])
@@ -39,10 +39,10 @@ class BaseBoard(object):
 				self.set(head, "distance", 0)
 
 			# store each snake
-			if snake_name == settings.SNAKE_NAME:
+			if snake_id == settings.SNAKE_ID:
 				self._me = snake
 			else:
-				self.other_snake_names.append(snake.get("name", ""))
+				self.other_snake_names.append(snake.get("id", ""))
 
 		for coord in payload.get("walls", []):
 			self.set(coord, "empty", False)
