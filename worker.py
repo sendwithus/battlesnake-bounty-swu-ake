@@ -12,23 +12,18 @@ from utils import redis_server, best_move
 def update_quality(board):
 	quality_key = "%s_quality" % redis_key
 	quality = board.quality()
-	# print quality
 	quality = sum(quality.values())
 	current_quality = redis_server().get(quality_key)
 
-	if current_quality in [None, 'None', 'NoneType']:
-		current_quality = 0
-	else:
-		try:
-			current_quality = int(current_quality)
-		except Exception as e:
-			print e
-			current_quality = e
+	try:
+		current_quality = int(current_quality)
 
-	if redis_server().llen(redis_key) > 0:
-		if not current_quality or quality > current_quality:
-			redis_server().set(quality_key, quality)
+		if redis_server().llen(redis_key) > 0:
+			if not current_quality or quality > current_quality:
+				redis_server().set(quality_key, quality)
 
+	except Exception as e:
+		print e
 
 def update_visits(board):
 	# visit counter
@@ -38,14 +33,11 @@ def update_visits(board):
 
 
 def visit(game, payload, redis_key):
-	try:
-		payload = json.loads(payload)
-		board = RedisBoard(payload)	
-		update_quality(board)
-		update_visits(board)
-		visit_children(board, redis_key)
-	except Exception as e:
-		print e
+	payload = json.loads(payload)
+	board = RedisBoard(payload)	
+	update_quality(board)
+	update_visits(board)
+	visit_children(board, redis_key)
 
 def visit_children(board, redis_key):
 	# # visit children
