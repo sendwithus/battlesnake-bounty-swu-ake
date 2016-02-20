@@ -28,7 +28,6 @@ class ComputeBoard(BaseBoard):
 				snake_coords = snake.get("coords", [])
 				snake_coords.reverse()
 				for coord in snake_coords:
-					print "snake is alive: %s" % snake_coords
 					coord = tuple(coord)
 					self.set(coord, "empty", False)
 					self.set(coord, "controlled_by", snake_name)  # get snake UUID
