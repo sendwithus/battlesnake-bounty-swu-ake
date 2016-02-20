@@ -111,6 +111,7 @@ class BaseBoard(object):
 			direction = settings.DIRECTION_STRINGS.get(delta)
 			if direction:
 				moves.append(direction)
+		print "heads: %s" % self.head()
 		print "adjacent_cells: %s" % list(self.adjacent_empty_cells(self.head()))
 		print "valid moves: %s" % moves
 		print "payload:"
