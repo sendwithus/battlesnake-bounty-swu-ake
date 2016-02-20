@@ -9,6 +9,22 @@ from test import test
 from utils import redis_server, best_move
 
 
+def update_quality(board):
+	quality_key = "%s_quality" % redis_key
+	quality = board.quality()
+	current_quality = redis_server().get(quality_key)
+	current_quality = 0 if current_quality in ['None', 'NoneType'] else int(current_quality)
+
+	if redis_server().llen(redis_key) > 0:
+		if not current_quality or quality > current_quality:
+			redis_server().set(quality_key, quality)
+
+def update_visits(board):
+	# visit counter
+	visit_key = "%s_v" % redis_key
+	current_count = int(redis_server().get(visit_key))
+	redis_server().set(visit_key, current_count+1)
+
 
 def visit(game, payload, redis_key):
 	payload = json.loads(payload)
@@ -16,27 +32,18 @@ def visit(game, payload, redis_key):
 	# if not payload:
 	# 	return
 	board = RedisBoard(payload)	
+	update_quality(board)
+	update_visits(board)
+	# visit_children(board, redis_key)
 
-	# visit self
-	quality_key = "%s_quality" % redis_key
-	quality = board.quality()
-	current_quality = redis_server().get(quality_key)
-	current_quality = 0 if current_quality == 'None' else int(current_quality)
 
-	if redis_server().llen(redis_key) > 0:
-		if not current_quality or quality > current_quality:
-			redis_server().set(quality_key, quality)
+def visit_children(board, redis_key):
+	# # visit children
+	children = board.worstcase_children_dict()
+	for direction in children.keys():
+		payload = children[direction]
+		redis_server().lpush(redis_key, json.dumps(payload))
 
-	# visit counter
-	visit_key = "%s_v" % redis_key
-	current_count = int(redis_server().get(visit_key))
-	redis_server().set(visit_key, current_count+1)
-
-	# # # visit children
-	# children = board.worstcase_children_dict()
-	# for direction in children.keys():
-	# 	payload = children[direction]
-	# 	redis_server().lpush(redis_key, json.dumps(payload))
 
 print "Worker up and monitoring"
 while True:
