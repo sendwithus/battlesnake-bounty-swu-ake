@@ -54,6 +54,7 @@ class BaseBoard(object):
 		if coord not in self._cells.keys():
 			self._cells[coord] = {}
 		self._cells[coord][attr] = val
+		print self._cells[coord]
 
 	def get(self, coord, attr):
 		cell = self._cells.get(coord)
