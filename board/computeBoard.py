@@ -19,7 +19,7 @@ class ComputeBoard(BaseBoard):
 		territory_edges = [tuple(snake.get('coords')[0]) for snake in self.all_snakes]
 		for snake in self.all_snakes:
 			coord = tuple(snake.get('coords')[0])
-			print "%s: %s" % (coord, snake.get("id"))
+			# print "%s: %s" % (coord, snake.get("id"))
 			self.set(coord, "controlled_by", snake.get("id"))
 
 		territory_control = {}
@@ -41,6 +41,7 @@ class ComputeBoard(BaseBoard):
 					territory_control[controlled_by] += 1
 
 		self._territory_control = territory_control
+		print self._territory_control
 		return territory_control
 
 	def food_details(self):
