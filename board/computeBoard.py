@@ -9,7 +9,6 @@ from board.baseBoard import BaseBoard
 class ComputeBoard(BaseBoard):
 
 	def __init__(self, payload=None):
-		super(ComputeBoard, self).__init__(payload)
 
 		# add food
 		for coord in self.food:
@@ -48,6 +47,8 @@ class ComputeBoard(BaseBoard):
 
 		for coord in self._coords.keys():
 			print "%s: %s" % (coord, self._coords.get(coord))
+
+		super(ComputeBoard, self).__init__(payload)
 
 	def board_quality(self):
 		if hasattr(self, "_board_quality"):
