@@ -38,10 +38,15 @@ def update_visits(board):
 def visit(game, payload, redis_key):
 	payload = json.loads(payload)
 
+	print "A"
 	board = RedisBoard(payload)	
+	print "B"
 	update_quality(board)
+	print "C"
 	update_visits(board)
+	print "D"
 	visit_children(board, redis_key)
+	print "E"
 
 
 def visit_children(board, redis_key):

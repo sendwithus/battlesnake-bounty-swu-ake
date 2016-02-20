@@ -181,7 +181,6 @@ class ComputeBoard(BaseBoard):
 			return self._board_quality
 
 		ctrl = self.territory_control()
-		print ctrl
 		board_control = ctrl.get(settings.SNAKE_ID)
 
 		# board control
