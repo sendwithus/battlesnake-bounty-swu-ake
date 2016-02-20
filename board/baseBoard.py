@@ -87,7 +87,9 @@ class BaseBoard(object):
 
 	@property
 	def food(self):
-		return self.payload.get("food", [])
+		if self.payload:
+			return self.payload.get("food", [])
+		return []
 
 	@property
 	def all_snakes(self):
