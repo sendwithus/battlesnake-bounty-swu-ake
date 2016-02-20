@@ -21,9 +21,11 @@ class BaseBoard(object):
 		self.other_snake_names = []
 		self._snakes = self.payload.get("snakes", [])
 
-		for coord in payload.get("walls", []):
+		walls = payload.get("walls", [])
+		for coord in walls:
 			self.set(type(coord), "empty", False)
-		print "walls are solid: %s" % payload.get("walls", [])
+		if len(walls) > 0:
+			print "walls are solid: %s" % walls
 
 		for snake in self.all_snakes:
 			snake_status = snake.get("status", "dead")
