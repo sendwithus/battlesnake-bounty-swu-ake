@@ -3,6 +3,6 @@
 rm -r *.pyc
 git add -A
 git commit -m "$@"
-git push origin master
+git push origin master -f
 git push production master -f
 heroku logs -t
