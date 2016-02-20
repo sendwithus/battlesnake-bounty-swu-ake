@@ -180,7 +180,7 @@ class ComputeBoard(BaseBoard):
 			snake['health'] -= 1
 			if [x, y] in self.food:
 				snake['health'] = 100
-				new_payload.get("food", []).remove((x, y))
+				new_payload["food"] = [coord for coord in new_payload.get("food", []) if coord != [x, y]]
 
 
 		return based_on_move, new_payload
