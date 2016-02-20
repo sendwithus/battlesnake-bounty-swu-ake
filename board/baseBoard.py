@@ -21,7 +21,8 @@ class BaseBoard(object):
 		self.other_snakes = []
 		self.other_snake_names = []
 		self._snakes = self.payload.get("snakes", [])
-		for snake in self._snakes:
+		print self.all_snakes
+		for snake in self.all_snakes:
 			snake_status = snake.get("status", "dead")
 			snake_length = len(snake.get("coords", []))
 			snake_name = snake.get("name", "")
