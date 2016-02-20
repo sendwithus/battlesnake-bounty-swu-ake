@@ -11,24 +11,6 @@ class ComputeBoard(BaseBoard):
 	def __init__(self, payload=None):
 		super(ComputeBoard, self).__init__(payload)
 
-	def board_quality(self):
-		if hasattr(self, "_board_quality"):
-			return self._board_quality
-
-		# board control
-		ctrl = self.territory_control()
-		avg_control = sum(ctrl.values())/len(ctrl.keys())
-		my_control = ctrl[self._me.get("name")]
-		board_control = my_control/avg_control
-
-		# approaching food
-		hunger = (100 - self._me.get("health"))
-		distance = self.distance_to_closest_food()
-		approach_food = hunger*distance/10
-
-		self._board_quality = board_control + approach_food
-		return self._board_quality
-
 	def territory_control(self):
 		if hasattr(self, "_territory_control"):
 			if type(self._territory_control) == int:
@@ -193,4 +175,21 @@ class ComputeBoard(BaseBoard):
 		return based_on_move, new_payload
 
 	def quality(self):
-		return self.territory_control().get('Sendwithus')
+		# return self.territory_control().get('Sendwithus')
+
+		if hasattr(self, "_board_quality"):
+			return self._board_quality
+
+		# board control
+		ctrl = self.territory_control()
+		avg_control = sum(ctrl.values())/len(ctrl.keys())
+		my_control = ctrl[self._me.get("name")]
+		board_control = my_control/avg_control
+
+		# approaching food
+		hunger = (100 - self._me.get("health"))
+		distance = self.distance_to_closest_food()
+		approach_food = hunger*distance/10
+
+		self._board_quality = board_control + approach_food
+		return self._board_quality
