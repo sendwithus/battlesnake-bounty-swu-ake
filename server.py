@@ -123,6 +123,8 @@ def move():
 		game = data.get("game")
 		move = best_move(data.get("game"), board)
 		# debug()
+		if data.get("move", 1) % 40 == 0:
+			nuke_redis()
 	except Exception as e:
 		import traceback
 		traceback.print_exc()
