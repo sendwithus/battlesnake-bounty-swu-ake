@@ -58,8 +58,7 @@ class ComputeBoard(BaseBoard):
 
 	def distance_to_closest_food(self):
 		distances = [dist for (dist, ctrl, coord) in self.food_details() if ctrl == settings.SNAKE_ID]
-		print distances
-		return min(distances)
+		return min(distances) if len(distances) > 0 else 0
 
 	def closest_food_directions(self):
 		if hasattr(self, "_closest_food_directions"):
