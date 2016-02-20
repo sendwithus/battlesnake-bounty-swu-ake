@@ -180,14 +180,16 @@ class ComputeBoard(BaseBoard):
 		if hasattr(self, "_board_quality"):
 			return self._board_quality
 
+		board_control = self.territory_control().get('Sendwithus')
+
 		# board control
-		ctrl = self.territory_control()
-		avg_control = sum(ctrl.values())/max(1, len(ctrl.keys()))
-		my_control = ctrl.get(settings.SNAKE_ID, 0)
-		board_control = my_control/max(avg_control, 1)
+		# ctrl = self.territory_control()
+		# avg_control = sum(ctrl.values())/max(1, len(ctrl.keys()))
+		# my_control = ctrl.get(settings.SNAKE_ID, 0)
+		# board_control = my_control/max(avg_control, 1)
 
 		# approaching food
-		hunger = (100 - self._me.get("health"))
+		hunger = (100 - self._me.get("health", 100))
 		distance = self.distance_to_closest_food()
 		approach_food = hunger*distance/10
 
