@@ -117,7 +117,7 @@ def move():
 	if move not in board.valid_moves():
 		bad_move = move
 		move = random.choice(board.valid_moves())
-		print "%s is an invalid move, randomly choosing %s instead" % (bad_move, move)
+		print "'%s' is an invalid move, randomly choosing '%s' instead" % (bad_move, move)
 
 	clear_game()
 	debug()
@@ -125,6 +125,7 @@ def move():
 		"move": move,
 		"taunt": ""
 	}
+	print response
 	return jsonify(response)
 
 if __name__ == '__main__':
