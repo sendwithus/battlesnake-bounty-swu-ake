@@ -50,7 +50,7 @@ def best_move(game, board):
 	qualities = [
 		('north', int(n) if n else 0),
 		('south', int(s) if s else 0),
-		('east', int(e) if e else 0),p
+		('east', int(e) if e else 0),
 		('west', int(w) if w else 0),
 	]
 	qualities = sorted(qualities, key=lambda tup: -tup[1])

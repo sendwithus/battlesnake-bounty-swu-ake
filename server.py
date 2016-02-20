@@ -124,7 +124,6 @@ def move():
 		move = best_move(data.get("game"), board)
 		debug()
 	except Exception as e:
-		print dir(e)
 		import traceback
 		traceback.print_exc()
 		print e
