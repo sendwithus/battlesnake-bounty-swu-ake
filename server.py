@@ -28,8 +28,8 @@ def nuke_redis():
 @application.route('/4swu/redis/debug')
 def debug_redis():
 	data = {}
-	data['keys'] = redis_server().keys('*')
-	for key in redis_server().keys('*'):
+	data['keys'] = redis_server().keys()
+	for key in redis_server().keys():
 		try:
 			data[key] = redis_server().get(key)
 		except:
