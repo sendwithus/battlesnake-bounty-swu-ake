@@ -28,7 +28,8 @@ def update_quality(board):
 def update_visits(board):
 	# visit counter
 	visit_key = "%s_v" % redis_key
-	current_count = int(redis_server().get(visit_key))
+	visits = redis_server().get(visit_key)
+	current_count = int(visits) if redis_server().get(visit_key) else 0
 	redis_server().set(visit_key, current_count+1)
 
 

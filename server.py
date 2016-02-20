@@ -120,8 +120,10 @@ def move():
 		time.sleep(0.5)
 		data = json.loads(request.data)
 		move = best_move(data.get("game"), board)
-
-		clear_game()
+		redis_server().set("%s_north_quality" % game, 0)
+		redis_server().set("%s_south_quality" % game, 0)
+		redis_server().set("%s_east_quality" % game, 0)
+		redis_server().set("%s_west_quality" % game, 0)
 		debug()
 	except Exception as e:
 		print e
