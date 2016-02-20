@@ -18,7 +18,9 @@ class ComputeBoard(BaseBoard):
 
 		territory_edges = [tuple(snake.get('coords')[0]) for snake in self.all_snakes]
 		for snake in self.all_snakes:
-			self.set(tuple(snake.get('coords')[0]), "controlled_by", snake.get("id"))
+			coord = tuple(snake.get('coords')[0])
+			print "%s: %s" % (coord, snake.get("id"))
+			self.set(coord, "controlled_by", snake.get("id"))
 
 		territory_control = {}
 		while len(territory_edges) > 0:
