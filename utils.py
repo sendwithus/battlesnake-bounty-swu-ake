@@ -53,7 +53,8 @@ def best_move(game, board):
 		('east', int(e) if e != 'None' else 0),
 		('west', int(w) if w != 'None' else 0),
 	]
-	qualities.sort(key=lambda tup: tup[1])
+	print "qualities: %s" % qualities
+	qualities = sorted(qualities, key=lambda tup: tup[1])
 	valid_moves = board.valid_moves()
 	print "qualities: %s" % qualities
 	for (direction, weight) in qualities:
