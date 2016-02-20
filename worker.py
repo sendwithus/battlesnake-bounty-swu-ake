@@ -37,14 +37,14 @@ def update_visits(board):
 def visit(game, payload, redis_key):
 	try:
 		payload = json.loads(payload)
+		board = RedisBoard(payload)	
+		update_quality(board)
+		update_visits(board)
+		visit_children(board, redis_key)
 	except Exception as e:
 		import traceback
 		traceback.print_exc()
 		print e
-	board = RedisBoard(payload)	
-	update_quality(board)
-	update_visits(board)
-	visit_children(board, redis_key)
 
 def visit_children(board, redis_key):
 	# # visit children
