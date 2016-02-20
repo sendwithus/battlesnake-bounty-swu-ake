@@ -42,7 +42,7 @@ while True:
 	for game in redis_server().smembers("active_games"):
 		for redis_key in ["%s_north" % game, "%s_south" % game, "%s_east" % game,"%s_west" % game]:
 
-			board_key = redis_server().spop(redis_key)
+			board_key = redis_server().lpop(redis_key)
 			print "got %s off of %s" % (board_key, redis_key)
 			# if game and board_key:
 			# 	visit(game, board_key, redis_key)
