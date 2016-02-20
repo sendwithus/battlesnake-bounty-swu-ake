@@ -41,7 +41,7 @@ class ComputeBoard(BaseBoard):
 					territory_control[controlled_by] += 1
 
 		self._territory_control = territory_control
-		print self._territory_control
+		# print self._territory_control
 		return territory_control
 
 	def food_details(self):
