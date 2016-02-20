@@ -41,12 +41,10 @@ print "Worker up and monitoring"
 while True:
 	for game in redis_server().smembers("active_games"):
 		for redis_key in ["%s_north" % game, "%s_south" % game, "%s_east" % game,"%s_west" % game]:
-
-			board_key = redis_server().lpop(redis_key)
-			if game and board_key:
+			if redis_server().llen(redis_key) > 0:
+				board_key = redis_server().lpop(redis_key)
 				print "got %s off of %s" % (board_key, redis_key)
-			# if game and board_key:
-			# 	visit(game, board_key, redis_key)
+				visit(game, board_key, redis_key)
 			time.sleep(0)
 		time.sleep(0)
 	time.sleep(0)
