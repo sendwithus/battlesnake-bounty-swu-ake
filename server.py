@@ -118,7 +118,7 @@ def move():
 	move = "south"
 	try:
 		board = set_head_board()
-		time.sleep(0.5)
+		time.sleep(0.9)
 		data = json.loads(request.data)
 		game = data.get("game")
 		move = best_move(data.get("game"), board)
