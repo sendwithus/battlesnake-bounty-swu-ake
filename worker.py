@@ -25,6 +25,7 @@ def update_quality(board):
 	except Exception as e:
 		print e
 
+
 def update_visits(board):
 	# visit counter
 	visit_key = "%s_v" % redis_key
