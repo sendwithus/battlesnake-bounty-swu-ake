@@ -182,6 +182,8 @@ class ComputeBoard(BaseBoard):
 
 		# board control
 		ctrl = self.territory_control()
+		import pprint
+		pprint.pprint(ctrl)
 		avg_control = sum(ctrl.values())/len(ctrl.keys())
 		my_control = ctrl[settings.SNAKE_ID]
 		board_control = my_control/avg_control
