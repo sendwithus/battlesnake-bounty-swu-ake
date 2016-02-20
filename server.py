@@ -70,7 +70,7 @@ def set_head_board():
 
 	children = board.worstcase_children_dict()
 	for direction in children.keys():
-		proposed_head = board.head() + settings.DIRECTION_TUPLES[direction]
+		proposed_head = (board.head() + list(settings.DIRECTION_TUPLES[direction])
 		if len(children.keys()) > 1 and proposed_head not in no_go_coords:
 			payload = json.dumps(children[direction])
 			board_direction_key = "%s_%s" % (game, direction)
