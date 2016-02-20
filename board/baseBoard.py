@@ -11,6 +11,8 @@ class BaseBoard(object):
 		self.load_payload(payload)
 
 	def load_payload(self, payload):
+		print "loading payload"
+
 		# add food
 		for coord in self.food:
 			self.set(tuple(coord), "food", True)
@@ -153,8 +155,8 @@ class BaseBoard(object):
 		print "adjacent_cells: %s" % list(self.adjacent_empty_cells(self.head()))
 		print "valid moves: %s" % moves
 		if len(list(self.adjacent_empty_cells(self.head()))):
-			print "%s:%s" % (coord, self._cells.get(coord))
-			
+			print "%s: %s" % (coord, self._cells.get(coord))
+
 		# print "payload:"
 		# import pprint
 		# pprint.pprint(self.payload)
