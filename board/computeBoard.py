@@ -189,7 +189,11 @@ class ComputeBoard(BaseBoard):
 		my_control = ctrl.get(settings.SNAKE_ID, 0)
 		board_control = my_control/max(avg_control, 1)
 		print board_control
-
+		print ctrl
+		print settings.SNAKE_ID
+		print avg_control
+		print ""
+		
 		# approaching food
 		hunger = (100 - self._me.get("health", 100))
 		distance = self.distance_to_closest_food()
