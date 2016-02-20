@@ -35,7 +35,7 @@ def visit(game, data, redis_key):
 	children = board.worstcase_children_dict()
 	for direction in children.keys():
 		payload = children[direction]
-		redis_server().sadd(redis_key, json.dumps(payload))
+		redis_server().lpush(redis_key, json.dumps(payload))
 
 print "Worker up and monitoring"
 while True:
@@ -43,7 +43,6 @@ while True:
 		for redis_key in ["%s_north" % game, "%s_south" % game, "%s_east" % game,"%s_west" % game]:
 			if redis_server().llen(redis_key) > 0:
 				board_key = redis_server().lpop(redis_key)
-				print "got %s off of %s" % (board_key, redis_key)
 				visit(game, board_key, redis_key)
 			time.sleep(0)
 		time.sleep(0)
