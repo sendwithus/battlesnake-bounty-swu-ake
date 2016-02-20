@@ -5,13 +5,10 @@ import copy
 class BaseBoard(object):
 
 	def __init__(self, payload):
-		try:
-			self.payload = payload
-			self._cells = {}
-			self.game_name = self.payload.get("game") if self.payload else ""
-			self.load_payload(payload)
-		except Exception as e:
-			print e
+		self.payload = payload
+		self._cells = {}
+		self.game_name = self.payload.get("game") if self.payload else ""
+		self.load_payload(payload)
 
 	def load_payload(self, payload):
 		print "loading payload"
