@@ -13,7 +13,7 @@ def update_quality(board):
 	quality_key = "%s_quality" % redis_key
 	quality = board.quality()
 	print quality
-	quality = avg(quality.values())
+	quality = sum(quality.values())
 	current_quality = redis_server().get(quality_key)
 
 	if current_quality in [None, 'None', 'NoneType']:
