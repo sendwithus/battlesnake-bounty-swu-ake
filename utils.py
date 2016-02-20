@@ -50,12 +50,13 @@ def best_move(game, board):
 	qualities = [
 		('north', int(n) if n else 0),
 		('south', int(s) if s else 0),
-		('east', int(e) if e else 0),
+		('east', int(e) if e else 0),p
 		('west', int(w) if w else 0),
 	]
 	qualities = sorted(qualities, key=lambda tup: -tup[1])
 	valid_moves = board.valid_moves()
 	print "qualities: %s" % qualities
+	print "valid directions: %s" % valid_moves
 	for (direction, weight) in qualities:
 		if direction in valid_moves:
 			print "best: %s at %s" % (direction, weight)
