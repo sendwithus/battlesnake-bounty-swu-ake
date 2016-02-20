@@ -17,6 +17,9 @@ class ComputeBoard(BaseBoard):
 				return self._territory_control
 
 		territory_edges = [tuple(snake.get('coords')[0]) for snake in self.all_snakes]
+		for snake in self.all_snakes:
+			self.set(tuple(snake.get('coords')[0]), "controlled_by", snake.get("id"))
+
 		territory_control = {}
 		while len(territory_edges) > 0:
 			
@@ -188,17 +191,11 @@ class ComputeBoard(BaseBoard):
 		avg_control = sum(ctrl.values())/max(1, len(ctrl.keys()))
 		my_control = ctrl.get(settings.SNAKE_ID, 0)
 		board_control = my_control/max(avg_control, 1)
-		# print board_control
-		# print ctrl
-		# print settings.SNAKE_ID
-		# print avg_control
-		# print ""
 		
 		# approaching food
 		hunger = (100 - self._me.get("health", 100))
 		distance = self.distance_to_closest_food()
 		approach_food = hunger*distance
-		# print "%s = %s*%s"  % (approach_food, hunger, distance)
 
 		self._board_quality = {
 			"control": board_control,
