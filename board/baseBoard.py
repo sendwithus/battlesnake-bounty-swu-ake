@@ -21,11 +21,11 @@ class BaseBoard(object):
 		self.other_snake_names = []
 		self._snakes = self.payload.get("snakes", [])
 
-		walls = payload.get("walls", [])
-		for coord in walls:
+		self.walls = payload.get("walls", [])
+		for coord in self.walls:
 			self.set(type(coord), "empty", False)
 		if len(walls) > 0:
-			print "walls are solid: %s" % walls
+			print "walls are solid: %s" % self.walls
 
 		for snake in self.all_snakes:
 			snake_status = snake.get("status", "dead")
@@ -58,7 +58,7 @@ class BaseBoard(object):
 
 	def get(self, coord, attr):
 		cell = self._cells.get(coord)
-		if cell:
+		if cell != None:
 			val = cell.get(attr)
 			if val != None:
 				return val
@@ -69,6 +69,8 @@ class BaseBoard(object):
 		if attr == "empty":
 			if 0 <= x < self.width:
 				if 0 <= y < self.height:
+					if [x, y] in self.walls:
+						return False
 					return True
 			return False
 
@@ -143,16 +145,15 @@ class BaseBoard(object):
 	def adjacent_empty_cells(self, v):
 		for coord in self.adjacent_cells(v):
 			empty = self.get(coord, 'empty')
-			if self.get(coord, 'empty'):
+			if empty == True:
 				yield coord
 
 	def valid_moves(self):
 		moves = []
-		for coord in list(self.adjacent_empty_cells(self.head())):
+		for coord in self.adjacent_empty_cells(self.head()):
 			delta = subtract_vectors(coord, self.head())
 			direction = settings.DIRECTION_STRINGS.get(delta)
-			if direction:
-				moves.append(direction)
+			moves.append(direction)
 		return moves
 
 
