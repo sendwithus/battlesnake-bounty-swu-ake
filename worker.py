@@ -14,10 +14,14 @@ def update_quality(board):
 	quality = board.quality()
 	current_quality = redis_server().get(quality_key)
 
-	if current_quality in ['None', 'NoneType']:
+	if current_quality in [None, 'None', 'NoneType']:
 		current_quality = 0
 	else:
-		current_quality = int(current_quality)
+		try:
+			current_quality = int(current_quality)
+		except Exception as e:
+			print e
+			current_quality = e
 
 	if redis_server().llen(redis_key) > 0:
 		if not current_quality or quality > current_quality:
