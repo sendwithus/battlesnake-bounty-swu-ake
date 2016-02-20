@@ -200,5 +200,6 @@ class ComputeBoard(BaseBoard):
 		approach_food = hunger*distance
 		# print "%s = %s*%s"  % (approach_food, hunger, distance)
 
+		print "food: %s, control: %s" % (approach_food, board_control)
 		self._board_quality = board_control + approach_food
 		return self._board_quality
