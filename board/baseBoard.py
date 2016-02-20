@@ -45,7 +45,7 @@ class BaseBoard(object):
 				self.other_snake_names.append(snake.get("id", ""))
 
 		for coord in payload.get("walls", []):
-			self.set(coord, "empty", False)
+			self.set(type(coord), "empty", False)
 
 	def set(self, coord, attr, val):
 		if coord not in self._cells.keys():
