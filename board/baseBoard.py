@@ -20,6 +20,11 @@ class BaseBoard(object):
 		self.other_snakes = []
 		self.other_snake_names = []
 		self._snakes = self.payload.get("snakes", [])
+
+		for coord in payload.get("walls", []):
+			self.set(type(coord), "empty", False)
+		print "walls are solid: %s" % payload.get("walls", [])
+
 		for snake in self.all_snakes:
 			snake_status = snake.get("status", "dead")
 			snake_length = len(snake.get("coords", []))
@@ -31,7 +36,7 @@ class BaseBoard(object):
 				for coord in snake_coords:
 					coord = tuple(coord)
 					self.set(coord, "empty", False)
-					self.set(coord, "controlled_by", snake_id)  # get snake UUID
+					self.set(coord, "controlled_by", snake_id)
 					self.set(coord, "ttl", ttl)
 					ttl += 1
 				head = tuple(snake_coords[-1])
@@ -43,9 +48,6 @@ class BaseBoard(object):
 				self._me = snake
 			else:
 				self.other_snake_names.append(snake.get("id", ""))
-
-		for coord in payload.get("walls", []):
-			self.set(type(coord), "empty", False)
 
 	def set(self, coord, attr, val):
 		if coord not in self._cells.keys():
