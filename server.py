@@ -95,8 +95,7 @@ def start():
 	})
 
 
-@application.
-('/end', methods=['POST'])
+@application.route('/end', methods=['POST'])
 def end():
 	data = json.loads(request.data)
 	redis_server().srem("active_games", data.get("game"))
