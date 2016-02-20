@@ -5,6 +5,7 @@ import pprint
 import time
 import random
 
+
 import settings
 from utils import redis_server, redis_key, subtract_vectors, best_move
 from board.redisBoard import RedisBoard
@@ -63,10 +64,12 @@ def set_head_board():
 	children = board.worstcase_children_dict()
 	for direction in children.keys():
 		payload = children[direction]
+		payload = json.dumps(payload)
 		if type(payload) != dict:
 			print "payload is not json!: %s" % payload
 		board_direction_key = "%s_%s" % (game, direction)
-		redis_server().sadd(board_direction_key, json.dumps(payload))
+		print "adding to '%s' %s" % (board_direction_key, payload)
+		redis_server().sadd(board_direction_key, payload)
 	return board
 
 def clear_game():
