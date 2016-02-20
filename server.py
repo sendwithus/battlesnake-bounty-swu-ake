@@ -115,16 +115,17 @@ def debug():
 
 @application.route('/move', methods=['POST'])
 def move():
-	board = set_head_board()
-	time.sleep(0.5)
-	data = json.loads(request.data)
-	game = data.get("game")
-	move = best_move(data.get("game"), board)
-	redis_server().set("%s_north_quality" % game, 0)
-	redis_server().set("%s_south_quality" % game, 0)
-	redis_server().set("%s_east_quality" % game, 0)
-	redis_server().set("%s_west_quality" % game, 0)
-	debug()
+	move = "south"
+	try:
+		board = set_head_board()
+		time.sleep(0.5)
+		data = json.loads(request.data)
+		game = data.get("game")
+		move = best_move(data.get("game"), board)
+		debug()
+	except Exception as e:
+		print e
+
 	response = {
 		"move": move,
 		"taunt": ""
