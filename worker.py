@@ -19,6 +19,7 @@ def update_quality(board):
 
 		if redis_server().llen(redis_key) > 0:
 			if not current_quality or quality > current_quality:
+				print "quality: %s" % quality_dict
 				redis_server().set(quality_key, quality)
 
 	except Exception as e:

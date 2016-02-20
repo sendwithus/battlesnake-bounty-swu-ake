@@ -122,7 +122,7 @@ def move():
 		data = json.loads(request.data)
 		game = data.get("game")
 		move = best_move(data.get("game"), board)
-		debug()
+		# debug()
 	except Exception as e:
 		import traceback
 		traceback.print_exc()
