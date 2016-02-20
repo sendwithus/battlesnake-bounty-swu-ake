@@ -95,6 +95,7 @@ def start():
 def end():
 	data = json.loads(request.data)
 	redis_server().srem("active_games", data.get("game"))
+	clear_game()
 	return jsonify(settings.ME)
 
 
