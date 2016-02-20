@@ -1,6 +1,6 @@
 import settings
 from utils import subtract_vectors
-
+import copy
 
 class BaseBoard(object):
 
@@ -8,6 +8,43 @@ class BaseBoard(object):
 		self.payload = payload
 		self._cells = {}
 		self.game_name = self.payload.get("game") if self.payload else ""
+		self.load_payload(payload)
+
+	def load_payload(self, payload):
+		# add food
+		for coord in self.food:
+			self.set(tuple(coord), "food", True)
+
+		# add snakes
+		self.other_snakes = []
+		self.other_snake_names = []
+		self._snakes = self.payload.get("snakes", [])
+		for snake in self._snakes:
+			snake_status = snake.get("status", "dead")
+			snake_length = len(snake.get("coords", []))
+			snake_name = snake.get("name", "")
+			if snake_status == "alive" and snake_length > 0:
+				ttl = 1
+				snake_coords = copy.deepcopy(snake.get("coords", []))
+				snake_coords.reverse()
+				for coord in snake_coords:
+					coord = tuple(coord)
+					self.set(coord, "empty", False)
+					self.set(coord, "controlled_by", snake_name)  # get snake UUID
+					self.set(coord, "ttl", ttl)
+					ttl += 1
+				head = tuple(snake_coords[-1])
+				self.set(head, "head", True)
+				self.set(head, "distance", 0)
+
+			# store each snake
+			if snake_name == settings.SNAKE_NAME:
+				self._me = snake
+			else:
+				self.other_snake_names.append(snake.get("name", ""))
+
+		for coord in payload.get("walls", []):
+			self.set(coord, "empty", False)
 
 	def set(self, coord, attr, val):
 		if coord not in self._cells.keys():
