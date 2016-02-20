@@ -1,6 +1,7 @@
 import json
 import redis
 import settings
+import random
 import os
 
 _redis_server = None
@@ -66,4 +67,4 @@ def best_move(game, board):
 		if direction in valid_moves:
 			print "best: %s at %s" % (direction, weight)
 			return direction
-
+	return random.choice(valid_moves)
