@@ -22,7 +22,7 @@ def visit(game, data, redis_key):
 	current_quality = redis_server().get(quality_key)
 	current_quality = 0 if current_quality == 'None' else int(current_quality)
 
-	if len(redis_server().smembers(redis_key)) > 0:
+	if redis_server().llen(redis_key) > 0:
 		if not current_quality or quality > current_quality:
 			redis_server().set(quality_key, quality)
 
