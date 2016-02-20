@@ -180,7 +180,9 @@ class ComputeBoard(BaseBoard):
 		if hasattr(self, "_board_quality"):
 			return self._board_quality
 
-		board_control = self.territory_control().get(settings.SNAKE_ID)
+		ctrl = self.territory_control()
+		print ctrl
+		board_control = ctrl.get(settings.SNAKE_ID)
 
 		# board control
 		# ctrl = self.territory_control()
