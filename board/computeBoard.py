@@ -41,7 +41,7 @@ class ComputeBoard(BaseBoard):
 					territory_control[controlled_by] += 1
 
 		self._territory_control = territory_control
-		# print self._territory_control
+		print self._territory_control
 		return territory_control
 
 	def food_details(self):
@@ -189,9 +189,10 @@ class ComputeBoard(BaseBoard):
 
 		# board control
 		ctrl = self.territory_control()
-		avg_control = sum(ctrl.values())/max(1, len(ctrl.keys()))
-		my_control = ctrl.get(settings.SNAKE_ID, 0)
-		board_control = my_control/max(avg_control, 1)
+		# avg_control = sum(ctrl.values())/max(1, len(ctrl.keys()))
+		# my_control = ctrl.get(settings.SNAKE_ID, 0)
+		# board_control = my_control/max(avg_control, 1)
+		board_control = ctrl.get(settings.SNAKE_ID, 0)
 		
 		# approaching food
 		hunger = (100 - self._me.get("health", 100))
