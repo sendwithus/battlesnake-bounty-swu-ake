@@ -64,14 +64,9 @@ def set_head_board():
 	board = RedisBoard(data)
 	children = board.worstcase_children_dict()
 	for direction in children.keys():
-		payload = children[direction]
-		if type(payload) != dict:
-			print "payload is not json!: %s" % payload
-		payload = json.dumps(payload)
+		payload = json.dumps(children[direction])
 		board_direction_key = "%s_%s" % (game, direction)
-		print "adding to '%s' %s" % (board_direction_key, payload)
 		length = redis_server().lpush(board_direction_key, payload)
-		print "added (%s)" % length
 	return board
 
 def clear_game():

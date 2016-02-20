@@ -105,7 +105,7 @@ class BaseBoard(object):
 				yield coord
 
 	def valid_moves(self):
-		moves = self.adjacent_empty_cells(self.head())
+		moves = list(self.adjacent_empty_cells(self.head()))
 		print "valid moves: %s" % moves
 		return moves
 
