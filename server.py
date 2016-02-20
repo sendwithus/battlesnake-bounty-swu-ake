@@ -115,8 +115,9 @@ def move():
 	data = json.loads(request.data)
 	move = best_move(data.get("game"))
 	if len(board.valid_moves()) == 4:
-		for coord in self._cells.key():
-			print "%s:%s" % (coord, self._cells.get(coord))
+		import pprint
+		pprint.pprint(_cells.key())
+		
 
 	if move not in board.valid_moves():
 		bad_move = move

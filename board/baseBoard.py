@@ -30,6 +30,7 @@ class BaseBoard(object):
 				ttl = 1
 				snake_coords = copy.deepcopy(snake.get("coords", []))
 				snake_coords.reverse()
+				print "looking at: %s" % snake_coords
 				for coord in snake_coords:
 					coord = tuple(coord)
 					self.set(coord, "empty", False)
