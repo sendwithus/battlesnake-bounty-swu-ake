@@ -183,8 +183,6 @@ class ComputeBoard(BaseBoard):
 	def quality(self):
 		# return self.territory_control().get('Sendwithus')
 
-		if hasattr(self, "_board_quality"):
-			return self._board_quality
 
 		ctrl = self.territory_control()
 		board_control = ctrl.get(settings.SNAKE_ID)
@@ -200,7 +198,6 @@ class ComputeBoard(BaseBoard):
 		distance = self.distance_to_closest_food()
 		approach_food = hunger*distance
 
-		self._board_quality = {
+		return {
 			"control": board_control,
 			"food": approach_food}
-		return self._board_quality
