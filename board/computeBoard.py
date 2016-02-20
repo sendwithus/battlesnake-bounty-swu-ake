@@ -184,16 +184,17 @@ class ComputeBoard(BaseBoard):
 		board_control = ctrl.get(settings.SNAKE_ID)
 
 		# board control
-		# ctrl = self.territory_control()
-		# avg_control = sum(ctrl.values())/max(1, len(ctrl.keys()))
-		# my_control = ctrl.get(settings.SNAKE_ID, 0)
-		# board_control = my_control/max(avg_control, 1)
+		ctrl = self.territory_control()
+		avg_control = sum(ctrl.values())/max(1, len(ctrl.keys()))
+		my_control = ctrl.get(settings.SNAKE_ID, 0)
+		board_control = my_control/max(avg_control, 1)
+		print board_control
 
 		# approaching food
 		hunger = (100 - self._me.get("health", 100))
 		distance = self.distance_to_closest_food()
-		approach_food = hunger*distance/10
-		print "%s = %s*%s"  % (approach_food, hunger, distance)
+		approach_food = hunger*distance
+		# print "%s = %s*%s"  % (approach_food, hunger, distance)
 
 		self._board_quality = board_control + approach_food
 		return self._board_quality
