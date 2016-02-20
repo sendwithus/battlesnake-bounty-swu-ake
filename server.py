@@ -105,9 +105,7 @@ def debug():
 	s = redis_server().get("%s_south_v" % game)
 	e = redis_server().get("%s_east_v" % game)
 	w = redis_server().get("%s_west_v" % game)
-	print "visits:"
-	import pprint
-	pprint.pprint({"n":n, "s":s, "e":e, "w":w})
+	print "visits:%s" % {"n":n, "s":s, "e":e, "w":w}
 
 
 @application.route('/move', methods=['POST'])

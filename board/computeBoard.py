@@ -193,6 +193,7 @@ class ComputeBoard(BaseBoard):
 		hunger = (100 - self._me.get("health", 100))
 		distance = self.distance_to_closest_food()
 		approach_food = hunger*distance/10
+		print "%s = %s*%s"  % (approach_food, hunger, distance)
 
 		self._board_quality = board_control + approach_food
 		return self._board_quality
