@@ -42,29 +42,21 @@ def subtract_vectors(v1, v2):
 	(x2, y2) = v2
 	return x1-x2, y1-y2
 
-def best_move(game):
+def best_move(game, board):
 	n = redis_server().get("%s_north_quality" % game)
 	s = redis_server().get("%s_south_quality" % game)
 	e = redis_server().get("%s_east_quality" % game)
 	w = redis_server().get("%s_west_quality" % game)
-	qualities = {
-		'n': int(n) if n != 'None' else 0,
-		's': int(s) if s != 'None' else 0,
-		'e': int(e) if e != 'None' else 0,
-		'w': int(w) if w != 'None' else 0,
-	}
-	best = max(qualities.values())
-
-	best_dir = "north"
-	if qualities['n'] == best:
-		best_dir = 'north'
-	if qualities['s'] == best:
-		best_dir = 'south'
-	if qualities['e'] == best:
-		best_dir = 'east'		
-	if qualities['w'] == best:
-		best_dir = 'west'
-		
-	print "%s best is: %s" % (qualities, best_dir)
-
-	return best_dir
+	qualities = []
+		('north', int(n) if n != 'None' else 0),
+		('south', int(s) if s != 'None' else 0),
+		('east', int(e) if e != 'None' else 0),
+		('west', int(w) if w != 'None' else 0),
+	]
+	qualities.sort(key=lambda tup: tup[1])
+	valid_moves = board.valid_moves()
+	print "qualities: %s" % qualities
+	for (direction, weight) in qualities:
+		if direction in valid_moves:
+			print "best: %s" % direction
+			return direction

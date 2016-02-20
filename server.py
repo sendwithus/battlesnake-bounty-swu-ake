@@ -113,16 +113,10 @@ def debug():
 def move():
 	board = set_head_board()
 	time.sleep(0.5)
-	data = json.loads(request.data)
-	move = best_move(data.get("game"))
-	print "valid moves: %s" % board.valid_moves()
-	if move not in board.valid_moves():
-		bad_move = move
-		move = random.choice(board.valid_moves())
-		print "'%s' is an invalid move, randomly choosing '%s' instead" % (bad_move, move)
+	move = best_move(data.get("game"), board)
 
 	clear_game()
-	debug()
+	# debug()
 	response = {
 		"move": move,
 		"taunt": ""
