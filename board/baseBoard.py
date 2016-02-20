@@ -105,7 +105,12 @@ class BaseBoard(object):
 				yield coord
 
 	def valid_moves(self):
-		moves = list(self.adjacent_empty_cells(self.head()))
+		moves = []
+		for coord in list(self.adjacent_empty_cells(self.head())):
+			delta = subtract_vectors(coord, self.head())
+			direction = settings.DIRECTION_STRINGS.get(delta)
+			if direction:
+				moves.append(direction)
 		print "valid moves: %s" % moves
 		return moves
 
