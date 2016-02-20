@@ -60,7 +60,7 @@ class BaseBoard(object):
 		cell = self._cells.get(coord)
 		if cell:
 			val = cell.get(attr)
-			if val:
+			if val != None:
 				return val
 		return self.default_value(coord, attr)
 
