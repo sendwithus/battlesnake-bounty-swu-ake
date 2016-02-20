@@ -186,11 +186,13 @@ class ComputeBoard(BaseBoard):
 		avg_control = sum(ctrl.values())/len(ctrl.keys())
 		my_control = ctrl[self.snake(settings.SNAKE_ID).get("id")]
 		board_control = my_control/avg_control
+		print "board control: %s" % board_control
 
 		# approaching food
 		hunger = (100 - self._me.get("health"))
 		distance = self.distance_to_closest_food()
 		approach_food = hunger*distance/10
+		print "approaching food: %s" % approach_food
 
 		self._board_quality = board_control + approach_food
 		return self._board_quality
