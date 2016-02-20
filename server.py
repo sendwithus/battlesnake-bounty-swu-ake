@@ -95,7 +95,8 @@ def start():
 	})
 
 
-@application.route('/end', methods=['POST'])
+@application.
+('/end', methods=['POST'])
 def end():
 	data = json.loads(request.data)
 	redis_server().srem("active_games", data.get("game"))
@@ -124,6 +125,9 @@ def move():
 		move = best_move(data.get("game"), board)
 		debug()
 	except Exception as e:
+		print dir(e)
+		import traceback
+		traceback.print_exc()
 		print e
 
 	response = {
