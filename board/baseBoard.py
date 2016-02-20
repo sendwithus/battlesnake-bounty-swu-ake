@@ -24,7 +24,7 @@ class BaseBoard(object):
 		self.walls = payload.get("walls", [])
 		for coord in self.walls:
 			self.set(type(coord), "empty", False)
-		if len(walls) > 0:
+		if len(self.walls) > 0:
 			print "walls are solid: %s" % self.walls
 
 		for snake in self.all_snakes:
