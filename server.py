@@ -21,7 +21,8 @@ def home():
 @application.route('/4swu/redis/nuke')
 def nuke_redis():
 	for key in redis_server().keys('*'):
-		redis_server().delete(key)
+		if key != "active_games":
+			redis_server().delete(key)
 	return jsonify({'nuked': 'all the things'})
 
 
@@ -101,13 +102,14 @@ def start():
 	return jsonify({
 		"taunt": '',
 	})
+	nuke_redis()
 
 
 @application.route('/end', methods=['POST'])
 def end():
 	data = json.loads(request.data)
 	redis_server().srem("active_games", data.get("game"))
-	clear_game()
+	nuke_redis()
 	return jsonify(settings.ME)
 
 
