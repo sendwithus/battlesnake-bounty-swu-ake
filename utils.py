@@ -47,7 +47,7 @@ def best_move(game, board):
 	s = redis_server().get("%s_south_quality" % game)
 	e = redis_server().get("%s_east_quality" % game)
 	w = redis_server().get("%s_west_quality" % game)
-	qualities = []
+	qualities = [
 		('north', int(n) if n != 'None' else 0),
 		('south', int(s) if s != 'None' else 0),
 		('east', int(e) if e != 'None' else 0),
