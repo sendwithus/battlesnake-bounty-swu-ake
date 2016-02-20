@@ -111,12 +111,15 @@ def debug():
 
 @application.route('/move', methods=['POST'])
 def move():
-	board = set_head_board()
-	time.sleep(0.5)
-	move = best_move(data.get("game"), board)
+	try:
+		board = set_head_board()
+		time.sleep(0.5)
+		move = best_move(data.get("game"), board)
 
-	clear_game()
-	debug()
+		clear_game()
+		debug()
+	except Exception as e:
+		print e
 	response = {
 		"move": move,
 		"taunt": ""
