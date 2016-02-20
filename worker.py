@@ -14,7 +14,7 @@ def update_quality(board):
 	quality = board.quality()
 	quality = sum(quality.values())
 	current_quality = redis_server().get(quality_key)
-
+	print "quality: %s" % quality
 	try:
 		current_quality = int(current_quality)
 
