@@ -23,6 +23,7 @@ def update_quality(board):
 		if not current_quality or quality > current_quality:
 			redis_server().set(quality_key, quality)
 
+
 def update_visits(board):
 	# visit counter
 	visit_key = "%s_v" % redis_key
@@ -32,15 +33,11 @@ def update_visits(board):
 
 def visit(game, payload, redis_key):
 	payload = json.loads(payload)
-	if payload.get('turn') == 2:
-		print "visiting: %s" % payload
-	# if not payload:
-	# 	return
+
 	board = RedisBoard(payload)	
 	update_quality(board)
 	update_visits(board)
-	if payload.get('turn') == 1:
-		visit_children(board, redis_key)
+	visit_children(board, redis_key)
 
 
 def visit_children(board, redis_key):
