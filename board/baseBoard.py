@@ -36,6 +36,7 @@ class BaseBoard(object):
 					self.set(coord, "empty", False)
 					self.set(coord, "controlled_by", snake_name)  # get snake UUID
 					self.set(coord, "ttl", ttl)
+					print "%s: %s" % (coord, self._cells[coord])
 					ttl += 1
 				head = tuple(snake_coords[-1])
 				self.set(head, "head", True)
@@ -54,7 +55,6 @@ class BaseBoard(object):
 		if coord not in self._cells.keys():
 			self._cells[coord] = {}
 		self._cells[coord][attr] = val
-		print self._cells[coord]
 
 	def get(self, coord, attr):
 		cell = self._cells.get(coord)
