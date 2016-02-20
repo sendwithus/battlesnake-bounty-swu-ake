@@ -114,8 +114,6 @@ def move():
 	time.sleep(0.5)
 	data = json.loads(request.data)
 	move = best_move(data.get("game"))
-	import pprint
-	pprint.pprint(board._cells)
 
 	if move not in board.valid_moves():
 		bad_move = move
@@ -128,9 +126,8 @@ def move():
 		"move": move,
 		"taunt": ""
 	}
-	print response
 	return jsonify(response)
 
 if __name__ == '__main__':
-	# application.debug = True
+	application.debug = True
 	application.run()

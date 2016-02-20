@@ -11,7 +11,6 @@ class BaseBoard(object):
 		self.load_payload(payload)
 
 	def load_payload(self, payload):
-		print "loading payload"
 
 		# add food
 		for coord in self.food:
@@ -21,7 +20,6 @@ class BaseBoard(object):
 		self.other_snakes = []
 		self.other_snake_names = []
 		self._snakes = self.payload.get("snakes", [])
-		print list(self.all_snakes)
 		for snake in self.all_snakes:
 			snake_status = snake.get("status", "dead")
 			snake_length = len(snake.get("coords", []))
@@ -30,13 +28,11 @@ class BaseBoard(object):
 				ttl = 1
 				snake_coords = copy.deepcopy(snake.get("coords", []))
 				snake_coords.reverse()
-				print "looking at: %s" % snake_coords
 				for coord in snake_coords:
 					coord = tuple(coord)
 					self.set(coord, "empty", False)
 					self.set(coord, "controlled_by", snake_name)  # get snake UUID
 					self.set(coord, "ttl", ttl)
-					print "%s: %s" % (coord, self._cells[coord])
 					ttl += 1
 				head = tuple(snake_coords[-1])
 				self.set(head, "head", True)
@@ -143,7 +139,6 @@ class BaseBoard(object):
 	def adjacent_empty_cells(self, v):
 		for coord in self.adjacent_cells(v):
 			empty = self.get(coord, 'empty')
-			print "%s empty? %s" % (coord, empty)
 			if self.get(coord, 'empty'):
 				yield coord
 
@@ -154,17 +149,6 @@ class BaseBoard(object):
 			direction = settings.DIRECTION_STRINGS.get(delta)
 			if direction:
 				moves.append(direction)
-
-		print "heads: %s" % self.head()
-		print "adjacent_cells: %s" % list(self.adjacent_empty_cells(self.head()))
-		print "valid moves: %s" % moves
-		if len(list(self.adjacent_empty_cells(self.head()))):
-			print "%s: %s" % (coord, self._cells.get(coord))
-
-		# print "payload:"
-		# import pprint
-		# pprint.pprint(self.payload)
-
 		return moves
 
 
