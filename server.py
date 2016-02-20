@@ -114,10 +114,8 @@ def move():
 	time.sleep(0.5)
 	data = json.loads(request.data)
 	move = best_move(data.get("game"))
-	if len(board.valid_moves()) == 4:
-		import pprint
-		pprint.pprint(_cells.key())
-		
+	import pprint
+	pprint.pprint(board._cells)
 
 	if move not in board.valid_moves():
 		bad_move = move
