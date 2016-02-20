@@ -202,4 +202,4 @@ class ComputeBoard(BaseBoard):
 		return {
 			"control": board_control,
 			"food": approach_food,
-			"time": -self.payload.get("turn", 1)*50}
+			"time": -self.payload.get("turn", 1)*10}
