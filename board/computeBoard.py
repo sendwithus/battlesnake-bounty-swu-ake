@@ -25,7 +25,7 @@ class ComputeBoard(BaseBoard):
 			snake_name = snake.get("name", "")
 			if snake_status == "alive" and snake_length > 0:
 				ttl = 1
-				snake_coords = copy(snake.get("coords", []))
+				snake_coords = copy.deepcopy(snake.get("coords", []))
 				snake_coords.reverse()
 				for coord in snake_coords:
 					coord = tuple(coord)
@@ -36,7 +36,6 @@ class ComputeBoard(BaseBoard):
 				head = tuple(snake_coords[-1])
 				self.set(head, "head", True)
 				self.set(head, "distance", 0)
-				snake_coords.reverse()
 
 			# store each snake
 			if snake_name == settings.SNAKE_NAME:
