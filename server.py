@@ -105,7 +105,9 @@ def debug():
 	s = redis_server().get("%s_south_v" % game)
 	e = redis_server().get("%s_east_v" % game)
 	w = redis_server().get("%s_west_v" % game)
-	print "visits: %s" % {"n":n, "s":s, "e":e, "w":w}
+	print "visits:"
+	import pprint
+	pprint.pprint({"n":n, "s":s, "e":e, "w":w})
 
 
 @application.route('/move', methods=['POST'])
@@ -114,7 +116,7 @@ def move():
 	time.sleep(0.5)
 	data = json.loads(request.data)
 	move = best_move(data.get("game"))
-
+	print "valid moves: %s" % board.valid_moves()
 	if move not in board.valid_moves():
 		bad_move = move
 		move = random.choice(board.valid_moves())
