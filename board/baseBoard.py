@@ -142,8 +142,9 @@ class BaseBoard(object):
 
 	def adjacent_empty_cells(self, v):
 		for coord in self.adjacent_cells(v):
-			x, y = coord
-			if self.get((x, y), 'empty'):
+			empty = self.get(coord, 'empty')
+			print "%s empty? %s" % (coord, empty)
+			if self.get(coord, 'empty'):
 				yield coord
 
 	def valid_moves(self):
