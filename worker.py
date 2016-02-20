@@ -13,7 +13,11 @@ def update_quality(board):
 	quality_key = "%s_quality" % redis_key
 	quality = board.quality()
 	current_quality = redis_server().get(quality_key)
-	current_quality = 0 if current_quality in ['None', 'NoneType'] else int(current_quality)
+
+	if current_quality in ['None', 'NoneType']:
+		current_quality = 0
+	else:
+		current_quality = int(current_quality)
 
 	if redis_server().llen(redis_key) > 0:
 		if not current_quality or quality > current_quality:
@@ -28,13 +32,15 @@ def update_visits(board):
 
 def visit(game, payload, redis_key):
 	payload = json.loads(payload)
-	print "visiting: %s" % payload
+	if payload.get('turn') == 2:
+		print "visiting: %s" % payload
 	# if not payload:
 	# 	return
 	board = RedisBoard(payload)	
 	update_quality(board)
 	update_visits(board)
-	# visit_children(board, redis_key)
+	if payload.get('turn') == 1:
+		visit_children(board, redis_key)
 
 
 def visit_children(board, redis_key):
