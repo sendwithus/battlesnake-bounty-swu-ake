@@ -48,11 +48,15 @@ def best_move(game, board):
 		s = redis_server().get("%s_south_quality" % game)
 		e = redis_server().get("%s_east_quality" % game)
 		w = redis_server().get("%s_west_quality" % game)
+		print n
+		print s
+		print e
+		print w
 		qualities = [
-			('north', int(n) if n != 'None' else 0),
-			('south', int(s) if s != 'None' else 0),
-			('east', int(e) if e != 'None' else 0),
-			('west', int(w) if w != 'None' else 0),
+			('north', int(n) if n else 0),
+			('south', int(s) if s else 0),
+			('east', int(e) if e else 0),
+			('west', int(w) if w else 0),
 		]
 		print "qualities: %s" % qualities
 		qualities = sorted(qualities, key=lambda tup: tup[1])
@@ -60,7 +64,7 @@ def best_move(game, board):
 		print "qualities: %s" % qualities
 		for (direction, weight) in qualities:
 			if direction in valid_moves:
-				print "best: %s" % direction
+				print "best: %s at %s" % (direction, weight)
 				return direction
 	except Exception as e:
 		print e
