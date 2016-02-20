@@ -11,15 +11,15 @@ from utils import redis_server, best_move
 
 def update_quality(board):
 	quality_key = "%s_quality" % redis_key
-	quality = board.quality()
-	print "quality: %s" % quality
-	quality = sum(quality.values())
+	quality_dict = board.quality()
+	quality = sum(quality_dict.values())
 	current_quality = redis_server().get(quality_key)
 	try:
 		current_quality = int(current_quality)
 
 		if redis_server().llen(redis_key) > 0:
 			if not current_quality or quality > current_quality:
+				print "quality: %s" % quality_dict
 				redis_server().set(quality_key, quality)
 
 	except Exception as e:

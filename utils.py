@@ -44,6 +44,7 @@ def subtract_vectors(v1, v2):
 
 def best_move(game, board):
 	try:
+		print "looking for best move"
 		n = redis_server().get("%s_north_quality" % game)
 		s = redis_server().get("%s_south_quality" % game)
 		e = redis_server().get("%s_east_quality" % game)
