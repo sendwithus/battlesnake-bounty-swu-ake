@@ -44,22 +44,16 @@ def subtract_vectors(v1, v2):
 
 def best_move(game, board):
 	try:
-		print "looking for best move"
 		n = redis_server().get("%s_north_quality" % game)
 		s = redis_server().get("%s_south_quality" % game)
 		e = redis_server().get("%s_east_quality" % game)
 		w = redis_server().get("%s_west_quality" % game)
-		print n
-		print s
-		print e
-		print w
 		qualities = [
 			('north', int(n) if n else 0),
 			('south', int(s) if s else 0),
 			('east', int(e) if e else 0),
 			('west', int(w) if w else 0),
 		]
-		print "qualities: %s" % qualities
 		qualities = sorted(qualities, key=lambda tup: -tup[1])
 		valid_moves = board.valid_moves()
 		print "qualities: %s" % qualities
