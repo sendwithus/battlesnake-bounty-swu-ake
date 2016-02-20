@@ -173,10 +173,14 @@ class ComputeBoard(BaseBoard):
 
 			# update snake
 			snake['age'] += 1
-			snake['health'] -= 1
 			del snake['coords'][-1]
 			snake['coords'].insert(0, (x, y))
 			new_payload.get("snakes", [])[snake_i] = snake
+
+			snake['health'] -= 1
+			if [x, y] in self.food:
+				snake['health'] = 100
+
 
 		return based_on_move, new_payload
 
@@ -195,11 +199,13 @@ class ComputeBoard(BaseBoard):
 		board_control = ctrl.get(settings.SNAKE_ID, 0)
 
 		# approaching food
-		hunger = (100 - self._me.get("health", 100))
+		health = self._me.get("health", 100)
+		hunger = 100 - health
 		distance = self.distance_to_closest_food()
-		approach_food = hunger*(40-distance)
+		approach_food = hunger*(40-distance)/100
 
 		return {
 			"control": board_control,
 			"food": approach_food,
+			"health": 
 			"time": -self.payload.get("turn", 1)*3}
