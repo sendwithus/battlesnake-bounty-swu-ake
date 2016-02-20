@@ -104,6 +104,13 @@ class BaseBoard(object):
 		for s in self.all_snakes:
 			yield s.get('id')
 
+	@property
+	def other_snake_ids(self):
+		for s in self.all_snakes:
+			if s.get('id') != settings.SNAKE_ID:
+				yield s.get('id')
+
+
 	def head(self, name=None):
 		if name:
 			for s in self.all_snakes:

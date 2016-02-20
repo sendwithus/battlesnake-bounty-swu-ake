@@ -60,13 +60,21 @@ def set_head_board():
 	redis_server().set("%s_east_v" % game, 0)
 	redis_server().set("%s_west_v" % game, 0)
 
-
 	board = RedisBoard(data)
+
+	no_go_coords = []				
+	for other_snake_id in board.other_snake_ids:
+		snake = board.snake(other_snake_id)
+		head = snake.get('coords', [])[0]
+		no_go_coords += list(board.adjacent_empty_cells(head))
+
 	children = board.worstcase_children_dict()
 	for direction in children.keys():
-		payload = json.dumps(children[direction])
-		board_direction_key = "%s_%s" % (game, direction)
-		length = redis_server().lpush(board_direction_key, payload)
+		proposed_head = board.head() + settings.DIRECTION_TUPLES[direction]
+		if len(children.keys()) > 1 and proposed_head not in no_go_coords:
+			payload = json.dumps(children[direction])
+			board_direction_key = "%s_%s" % (game, direction)
+			length = redis_server().lpush(board_direction_key, payload)
 	return board
 
 def clear_game():
@@ -122,7 +130,6 @@ def move():
 		data = json.loads(request.data)
 		game = data.get("game")
 		move = best_move(data.get("game"), board)
-		# debug()
 		if data.get("move", 1) % 40 == 0:
 			nuke_redis()
 	except Exception as e:
