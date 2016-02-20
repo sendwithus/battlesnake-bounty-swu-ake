@@ -35,7 +35,10 @@ def update_visits(board):
 
 
 def visit(game, payload, redis_key):
-	payload = json.loads(payload)
+	try:
+		payload = json.loads(payload)
+	except TypeError:
+		return
 	board = RedisBoard(payload)	
 	update_quality(board)
 	update_visits(board)
