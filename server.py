@@ -77,10 +77,14 @@ def clear_game():
 	redis_server().delete("%s_south" % game)
 	redis_server().delete("%s_east" % game)
 	redis_server().delete("%s_west" % game)
-	redis_server().set("%s_north_quality" % game, 0)
-	redis_server().set("%s_south_quality" % game, 0)
-	redis_server().set("%s_east_quality" % game, 0)
-	redis_server().set("%s_west_quality" % game, 0)
+	redis_server().delete("%s_north_v" % game)
+	redis_server().delete("%s_south_v" % game)
+	redis_server().delete("%s_east_v" % game)
+	redis_server().delete("%s_west_v" % game)
+	redis_server().delete("%s_north_quality" % game)
+	redis_server().delete("%s_south_quality" % game)
+	redis_server().delete("%s_east_quality" % game)
+	redis_server().delete("%s_west_quality" % game)
 
 
 @application.route('/start', methods=['POST'])
