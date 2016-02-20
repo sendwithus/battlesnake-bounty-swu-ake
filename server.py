@@ -114,6 +114,7 @@ def move():
 	try:
 		board = set_head_board()
 		time.sleep(0.5)
+		data = json.loads(request.data)
 		move = best_move(data.get("game"), board)
 
 		clear_game()
