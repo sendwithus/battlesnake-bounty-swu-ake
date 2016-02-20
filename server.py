@@ -70,8 +70,8 @@ def set_head_board():
 		payload = json.dumps(payload)
 		board_direction_key = "%s_%s" % (game, direction)
 		print "adding to '%s' %s" % (board_direction_key, payload)
-		redis_server().lpush(board_direction_key, payload)
-		print "added"
+		length = redis_server().lpush(board_direction_key, payload)
+		print "added (%s)" % length
 	return board
 
 def clear_game():
